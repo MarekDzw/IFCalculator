@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="grey lighten-5">
+    <v-container class="grey lighten-5 scroll">
       <v-card-title>IF Calculator Terms and Conditions of Use</v-card-title>
       <v-card-text>
         PLEASE READ THESE TERMS AND CONDITIONS OF USE CAREFULLY BEFORE USING
@@ -91,3 +91,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.scroll {
+  overflow-y: scroll;
+  height: 500px;
+}
+</style>

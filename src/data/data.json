@@ -25,11 +25,6 @@
       "value": 1.9
     }
   ],
-  "formulas": [
-    { "name": "Mifflin-St Jeor Formula", "value": "mifflin" },
-    { "name": "Harris-Benedict Formula", "value": "harris" },
-    { "name": "Katch-McArdle Formula", "value": "katch" }
-  ],
   "formula": {
     "mifflin": { "female": -161, "male": 5 },
     "harris": { "female": 447.593, "male": 88.362 },
