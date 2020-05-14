@@ -1,28 +1,24 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <Skeleton>
+    <template v-slot:disclaimer>
+      <Disclaimer />
+    </template>
+    <template v-slot:basicinfo>
+      <BasicInfo />
+    </template>
+  </Skeleton>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import Skeleton from "./views/Skeleton";
+import Disclaimer from "./components/Disclaimer.vue";
+import BasicInfo from "./components/BasicInfo.vue";
 export default {
   name: "App",
   components: {
-    HelloWorld
+    Skeleton,
+    Disclaimer,
+    BasicInfo
   }
 };
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

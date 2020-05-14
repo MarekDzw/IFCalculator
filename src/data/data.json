@@ -1,0 +1,38 @@
+{
+  "gender": [
+    { "name": "Male", "value": "male" },
+    { "name": "Female", "value": "female" }
+  ],
+  "activity": [
+    {
+      "name": "Sedentary",
+      "value": 1.2
+    },
+    {
+      "name": "Lightly Active",
+      "value": 1.375
+    },
+    {
+      "name": "Moderately Active",
+      "value": 1.55
+    },
+    {
+      "name": "Very Active",
+      "value": 1.1725
+    },
+    {
+      "name": "Extra Active",
+      "value": 1.9
+    }
+  ],
+  "formulas": [
+    { "name": "Mifflin-St Jeor Formula", "value": "mifflin" },
+    { "name": "Harris-Benedict Formula", "value": "harris" },
+    { "name": "Katch-McArdle Formula", "value": "katch" }
+  ],
+  "formula": {
+    "mifflin": { "female": -161, "male": 5 },
+    "harris": { "female": 447.593, "male": 88.362 },
+    "katch": { "female": 0, "male": 0 }
+  }
+}
