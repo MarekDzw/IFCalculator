@@ -29,5 +29,17 @@
     "mifflin": { "female": -161, "male": 5 },
     "harris": { "female": 447.593, "male": 88.362 },
     "katch": { "female": 0, "male": 0 }
-  }
+  },
+  "names": [
+    { "name": "Sarah", "value": 2502 },
+    { "name": "Emma", "value": 2005 },
+    { "name": "Laura", "value": 1968 },
+    { "name": "Chloé", "value": 1863 },
+    { "name": "Marie", "value": 1810 },
+    { "name": "Emily", "value": 1637 },
+    { "name": "Léa", "value": 1592 },
+    { "name": "Camille", "value": 1572 },
+    { "name": "Anna", "value": 1433 },
+    { "name": "Manon", "value": 1403 }
+  ]
 }

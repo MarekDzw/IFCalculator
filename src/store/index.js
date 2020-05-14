@@ -18,7 +18,7 @@ export default new Vuex.Store({
       gendDiff: undefined,
     },
     result: {
-      bmr: null,
+      bmr: 1950,
       tdee: null,
       lbm: null,
       lbmFat: null,

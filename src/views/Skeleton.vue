@@ -22,7 +22,9 @@
             <slot name="basicinfo"></slot>
           </v-stepper-content>
 
-          <v-stepper-content step="3"></v-stepper-content>
+          <v-stepper-content step="3">
+            <slot name="macrocalc"></slot>
+          </v-stepper-content>
 
           <v-stepper-content step="4"></v-stepper-content>
         </v-stepper-items>
