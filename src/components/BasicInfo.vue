@@ -50,10 +50,20 @@
         <v-col cols="6" md="8">
           <v-card class="pa-2" outlined tile>
             <p>Basal Metabolic Rate (BMR) {{ resultInfo.bmr }} kcal</p>
-            <v-radio-group @change="calculateData(dataInfo)" v-model="dataInfo.formula">
-              <v-radio value="mifflin" label="Mifflin-St Jeor Formula"></v-radio>
+            <v-radio-group
+              @change="calculateData(dataInfo)"
+              v-model="dataInfo.formula"
+            >
+              <v-radio
+                value="mifflin"
+                label="Mifflin-St Jeor Formula"
+              ></v-radio>
               <v-radio value="harris" label="Harris-Benedict Formula"></v-radio>
-              <v-radio value="katch" label="Katch-McArdle Formula" :disabled="!dataInfo.bodyfat"></v-radio>
+              <v-radio
+                value="katch"
+                label="Katch-McArdle Formula"
+                :disabled="!dataInfo.bodyfat"
+              ></v-radio>
             </v-radio-group>
           </v-card>
           <v-card class="pa-2" outlined tile>
@@ -74,18 +84,20 @@
     </v-container>
     <v-divider></v-divider>
     <v-container class="d-flex justify-center">
-      <v-btn color="primary" :disabled="!resultInfo.bmr" @click="updatePage(3)">Next step</v-btn>
+      <v-btn color="primary" :disabled="!resultInfo.bmr" @click="updatePage(3)"
+        >Next step</v-btn
+      >
     </v-container>
   </div>
 </template>
 
 <script>
-import staticText from "../data/data.json";
+import staticText from '../data/data.json';
 export default {
-  name: "BasicInfo",
+  name: 'BasicInfo',
   data() {
     return {
-      staticText
+      staticText,
     };
   },
   computed: {
@@ -94,27 +106,27 @@ export default {
     },
     resultInfo() {
       return this.$store.state.result;
-    }
+    },
   },
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
+      this.$store.commit('updatePage', value);
     },
     calculateData(value) {
       if (Object.values(value).includes(null)) {
         return;
       } else {
         value.gendDiff = this.staticText.formula[value.formula][value.gender];
-        this.$store.dispatch("calculateBMR", value);
-        this.$store.dispatch("calculateTDEE", value);
-        this.$store.dispatch("calculateBMI", value);
+        this.$store.dispatch('calculateBMR', value);
+        this.$store.dispatch('calculateTDEE', value);
+        this.$store.dispatch('calculateBMI', value);
         if (value.bodyfat) {
-          this.$store.dispatch("calculateLBM", value);
-          this.$store.dispatch("calculateBMR", value);
-          this.$store.dispatch("calculateTDEE", value);
+          this.$store.dispatch('calculateLBM', value);
+          this.$store.dispatch('calculateBMR', value);
+          this.$store.dispatch('calculateTDEE', value);
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
