@@ -8,7 +8,7 @@ Rewritten old Intermittent Fasting Calculator to run on modern web browsers.
 
 - [x] Disclaimer
 - [ ] Basic info
-  - [ ] Add suffix to input fields
+  - [x] Add suffix to input fields
   - [ ] Better display/colors
 - [ ] Macro Calculator
   - [ ] Carbs/Protein slider run simultaneously
