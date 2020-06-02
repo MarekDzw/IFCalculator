@@ -11,6 +11,7 @@ Rewritten old Intermittent Fasting Calculator to run on modern web browsers.
   - [x] Add suffix to input fields
   - [ ] Better display/colors
 - [ ] Macro Calculator
+  - [ ] Display value without numbers after dot
   - [ ] Carbs/Protein slider run simultaneously
   - [ ] Display rest/workout chart:
     - [ ] Display grams/percent/kcal on chart per data
@@ -20,6 +21,6 @@ Rewritten old Intermittent Fasting Calculator to run on modern web browsers.
   - [ ] Add color red/green on workout/rest kcal depends on over/under
   - [ ] Block days/workout min value to 0
   - [ ] Better display/colors
-- [ ] Goal
-
-  - [ ] TODO
+- [ ] Goals
+  - [ ] Add data picker
+  - [ ] Display grid

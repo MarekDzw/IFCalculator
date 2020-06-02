@@ -26,7 +26,9 @@
             <slot name="macrocalc"></slot>
           </v-stepper-content>
 
-          <v-stepper-content step="4"></v-stepper-content>
+          <v-stepper-content step="4">
+            <slot name="goals"></slot>
+          </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
     </v-card>
