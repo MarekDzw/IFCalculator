@@ -18,11 +18,24 @@ export default new Vuex.Store({
       gendDiff: undefined,
     },
     result: {
-      bmr: 1950,
+      bmr: null,
       tdee: null,
       lbm: null,
       lbmFat: null,
       bmi: null,
+    },
+    macro: {
+      dpc: 7,
+      wpc: 2,
+      workoutKcal: null,
+      restKcal: null,
+      restPercent: -20,
+      workoutPercent: 20,
+    },
+    summary: {
+      cycleTee: null,
+      cycleKcal: null,
+      cycleOU: null,
     },
   },
   mutations: {
@@ -44,6 +57,17 @@ export default new Vuex.Store({
     },
     updateBMI(state, value) {
       state.result.bmi = value;
+    },
+    updateMacro(state, value) {
+      state.macro.restPercent = value.restPercent;
+      state.macro.workoutPercent = value.workoutPercent;
+      state.macro.workoutKcal = value.workoutKcal;
+      state.macro.restKcal = value.restKcal;
+    },
+    updateSummary(state, value) {
+      state.summary.cycleTee = value.cycleTee;
+      state.summary.cycleKcal = value.cycleKcal;
+      state.summary.cycleOU = value.cycleOU;
     },
   },
   actions: {
@@ -96,6 +120,30 @@ export default new Vuex.Store({
       );
       commit('updateBMI', value);
     },
+    calculateMacro({ commit }, data) {
+      let value = data;
+
+      let tdee = this.state.result.tdee;
+
+      let workoutKcal = (tdee * (100 + Number(value.workoutPercent))) / 100;
+      let restKcal = (tdee * (100 + Number(value.restPercent))) / 100;
+
+      let restDays = value.dpc - value.wpc;
+
+      let cycleTee = tdee * value.dpc;
+      let cycleKcal = restDays * restKcal + value.wpc * workoutKcal;
+      let cycleOU = cycleKcal - cycleTee;
+
+      value.restKcal = restKcal;
+      value.workoutKcal = workoutKcal;
+      let valueSummary = {
+        cycleKcal: cycleKcal,
+        cycleTee: cycleTee,
+        cycleOU: cycleOU,
+      };
+      commit('updateMacro', value);
+      commit('updateSummary', valueSummary);
+      console.log(value);
+    },
   },
-  getters: {},
 });
