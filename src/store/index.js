@@ -143,7 +143,6 @@ export default new Vuex.Store({
       };
       commit('updateMacro', value);
       commit('updateSummary', valueSummary);
-      console.log(value);
     },
   },
 });

@@ -10,12 +10,14 @@
               v-model="dataInfo.height"
               label="Height"
               @change="calculateData(dataInfo)"
+              suffix="cm"
             ></v-text-field>
             <v-text-field
               type="number"
               v-model="dataInfo.weight"
               label="Weight"
               @change="calculateData(dataInfo)"
+              suffix="kg"
             ></v-text-field>
             <v-text-field
               type="number"
@@ -44,6 +46,7 @@
               v-model="dataInfo.bodyfat"
               label="Bodyfat(optional)"
               @change="calculateData(dataInfo)"
+              suffix="%"
             ></v-text-field>
           </v-card>
         </v-col>
