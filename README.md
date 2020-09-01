@@ -1,4 +1,4 @@
-## IFCalculator
+## IFCalculator [![Build Status](https://travis-ci.org/MarekDzw/IFCalculator.svg?branch=master)](https://travis-ci.org/MarekDzw/IFCalculator)
 
 ### Project info
 
