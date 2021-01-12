@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="grey lighten-5 scroll">
+    <v-container class="scroll">
       <v-card-title>IF Calculator Terms and Conditions of Use</v-card-title>
       <v-card-text>
         PLEASE READ THESE TERMS AND CONDITIONS OF USE CAREFULLY BEFORE USING
@@ -28,8 +28,7 @@
         immediately.
       </v-card-text>
       <v-card-title>
-        RELEASE OF LIABILITY OF PROGRAM AND PROGRAM
-        CREATORS/OWNERS
+        RELEASE OF LIABILITY OF PROGRAM AND PROGRAM CREATORS/OWNERS
       </v-card-title>
       <v-card-text>
         The use of the Program is at your own risk. In no event shall the
@@ -66,18 +65,20 @@
         v-model="checkbox"
         label="I agree to the terms and conditions described in this disclaimer"
       ></v-checkbox>
-      <v-btn :disabled="!checkbox" color="primary" @click="updatePage(2)">Next step</v-btn>
+      <v-btn :disabled="!checkbox" color="primary" @click="updatePage(2)"
+        >Next step</v-btn
+      >
     </v-container>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Disclaimer",
+  name: 'Disclaimer',
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
-    }
+      this.$store.commit('updatePage', value);
+    },
   },
   computed: {
     checkbox: {
@@ -85,10 +86,10 @@ export default {
         return this.$store.state.disclaimerCheck;
       },
       set(value) {
-        this.$store.commit("updateDisclaimerCheckbox", value);
-      }
-    }
-  }
+        this.$store.commit('updateDisclaimerCheckbox', value);
+      },
+    },
+  },
 };
 </script>
 

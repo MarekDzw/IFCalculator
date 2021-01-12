@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
-
+import text from '../data/text.json';
 export default new Vuex.Store({
   state: {
     page: 1,
@@ -16,13 +16,15 @@ export default new Vuex.Store({
       bodyfat: undefined,
       formula: 'mifflin',
       gendDiff: undefined,
-    },
-    result: {
-      bmr: null,
-      tdee: null,
-      lbm: null,
-      lbmFat: null,
-      bmi: null,
+      result: {
+        bmr: null,
+        tdee: null,
+        lbm: null,
+        lbmFat: null,
+        bmi: null,
+        perfWeight: null,
+        bmiText: null,
+      },
     },
     macro: {
       dpc: 7,
@@ -46,28 +48,32 @@ export default new Vuex.Store({
       state.page = value;
     },
     updateBMR(state, value) {
-      state.result.bmr = value;
+      state.data.result.bmr = value.toFixed(0);
     },
     updateLBM(state, value) {
-      state.result.lbm = value.lbm;
-      state.result.lbmFat = value.lbmFat;
+      state.data.result.lbm = value.lbm.toFixed(2);
+      state.data.result.lbmFat = value.lbmFat;
     },
     updateTDEE(state, value) {
-      state.result.tdee = value;
+      state.data.result.tdee = value;
     },
     updateBMI(state, value) {
-      state.result.bmi = value;
+      state.data.result.bmiText = value.bmiText;
+      state.data.result.bmi = value.bmi;
     },
     updateMacro(state, value) {
       state.macro.restPercent = value.restPercent;
       state.macro.workoutPercent = value.workoutPercent;
-      state.macro.workoutKcal = value.workoutKcal;
-      state.macro.restKcal = value.restKcal;
+      state.macro.workoutKcal = value.workoutKcal.toFixed(0);
+      state.macro.restKcal = value.restKcal.toFixed(0);
     },
     updateSummary(state, value) {
-      state.summary.cycleTee = value.cycleTee;
-      state.summary.cycleKcal = value.cycleKcal;
-      state.summary.cycleOU = value.cycleOU;
+      state.summary.cycleTee = value.cycleTee.toFixed(0);
+      state.summary.cycleKcal = value.cycleKcal.toFixed(0);
+      state.summary.cycleOU = value.cycleOU.toFixed(0);
+    },
+    updatePerfWeight(state, value) {
+      state.data.result.perfWeight = value.toFixed(2);
     },
   },
   actions: {
@@ -78,7 +84,7 @@ export default new Vuex.Store({
         commit('updateBMR', value);
       }
       if (data.formula == 'katch') {
-        let value = Math.round(370 + 21.6 * this.state.result.lbm);
+        let value = Math.round(370 + 21.6 * this.state.data.result.lbm);
         commit('updateBMR', value);
       }
       if (data.formula == 'harris') {
@@ -110,20 +116,30 @@ export default new Vuex.Store({
       };
       commit('updateLBM', value);
     },
+    calculatePerfWeight({ commit }) {
+      let height = this.state.data.height / 100;
+      let value = 2.2 * 22 + 3.5 * 22 * (height - 1.5);
+      commit('updatePerfWeight', value);
+    },
     calculateTDEE({ commit }, data) {
-      let value = Math.floor(data.activity * this.state.result.bmr);
+      let value = Math.floor(data.activity * this.state.data.result.bmr);
       commit('updateTDEE', value);
     },
     calculateBMI({ commit }, data) {
-      let value = Math.floor(
+      let bmi = Math.floor(
         data.weight / ((data.height / 100) * (data.height / 100))
       );
+      let bmiText = checkBMI(bmi);
+      let value = {
+        bmi: bmi,
+        bmiText: bmiText,
+      };
       commit('updateBMI', value);
     },
     calculateMacro({ commit }, data) {
       let value = data;
 
-      let tdee = this.state.result.tdee;
+      let tdee = this.state.data.result.tdee;
 
       let workoutKcal = (tdee * (100 + Number(value.workoutPercent))) / 100;
       let restKcal = (tdee * (100 + Number(value.restPercent))) / 100;
@@ -146,3 +162,11 @@ export default new Vuex.Store({
     },
   },
 });
+function checkBMI(value) {
+  let array = text.bmiIndicator;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].min < value && array[i].max > value) {
+      return array[i].text;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="grey lighten-5">
+    <v-container>
       <v-row>asasdd</v-row>
     </v-container>
     <v-divider></v-divider>
@@ -12,17 +12,17 @@
 
 <script>
 export default {
-  name: "Goals",
+  name: 'Goals',
   computed: {
     summaryInfo() {
       return this.$store.state.summary;
-    }
+    },
   },
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
-    }
-  }
+      this.$store.commit('updatePage', value);
+    },
+  },
 };
 </script>
 <style lang=""></style>

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-container class="grey lighten-5">
+    <v-container>
       <v-row>
         <v-col cols="12" md="3">
-          <v-card class="pa-2" outlined tile>
+          <v-card class="pa-2 ">
             <v-card-title>Schedule</v-card-title>
             <v-text-field
               type="number"
@@ -19,15 +19,20 @@
             />
           </v-card>
         </v-col>
-        <v-row>
-          <v-col cols="6" md="9">
+
+        <v-col cols="6" md="5">
+          <v-card class="pa-2 ">
             <v-card-title>Summary</v-card-title>
-            <v-card-text>Cycle TEE:{{summaryInfo.cycleTee}} kcal</v-card-text>
-            <v-card-text>TDEE: {{ resultInfo.tdee}} kcal</v-card-text>
-            <v-card-text>Cycle Calories: {{summaryInfo.cycleKcal }} kcal</v-card-text>
-            <v-card-text>Cycle Over/Under: {{summaryInfo.cycleOU}} kcal</v-card-text>
-          </v-col>
-        </v-row>
+            <v-card-text>Cycle TEE:{{ summaryInfo.cycleTee }} kcal</v-card-text>
+            <v-card-text>TDEE: {{ resultInfo.tdee }} kcal</v-card-text>
+            <v-card-text
+              >Cycle Calories: {{ summaryInfo.cycleKcal }} kcal</v-card-text
+            >
+            <v-card-text
+              >Cycle Over/Under: {{ summaryInfo.cycleOU }} kcal</v-card-text
+            >
+          </v-card>
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
@@ -39,7 +44,7 @@
                 solo
                 cols="1"
                 type="number"
-                :suffix="underTDEE"
+                :suffix="textTDEE"
                 v-model="macroInfo.restPercent"
                 @change="calculateMacro(macroInfo)"
               />
@@ -55,8 +60,8 @@
               />
             </v-col>
           </v-row>
-
-          <v-slider
+          <!-- Pie chart future, atm not available -->
+          <!-- <v-slider
             thumb-label
             @change="fillData()"
             v-model="macrodata[0]"
@@ -78,7 +83,7 @@
             label="Fat"
             min="0"
             :max="100 - macrodata[0]"
-          />
+          /> -->
         </v-col>
         <v-col cols="12" md="6">
           Workout
@@ -89,7 +94,7 @@
                 solo
                 cols="1"
                 type="number"
-                :suffix="underTDEE"
+                :suffix="textTDEE"
                 v-model="macroInfo.workoutPercent"
                 @change="calculateMacro(macroInfo)"
               />
@@ -105,16 +110,22 @@
               />
             </v-col>
           </v-row>
-          <v-slider label="Protein" />
+          <!-- Pie chart future, atm not available -->
+          <!-- <v-slider label="Protein" />
           <v-slider label="Carbs" />
-          <v-slider label="Fat" />
+          <v-slider label="Fat" /> -->
         </v-col>
       </v-row>
     </v-container>
     <v-divider></v-divider>
     <v-container class="d-flex justify-center">
-      <v-btn color="primary" @click="updatePage(2)">Back step</v-btn>
-      <v-btn color="primary" @click="updatePage(4), fillData()">Next step</v-btn>
+      <v-btn class="mr-4" color="primary" @click="updatePage(2)"
+        >Back step</v-btn
+      >
+
+      <v-btn class="ml-4" color="primary" @click="updatePage(4)"
+        >Next step</v-btn
+      >
     </v-container>
   </div>
 </template>
@@ -122,62 +133,63 @@
 <script>
 // import PieChart from "../components/PieChart.js";
 export default {
-  name: "MacroCalc",
+  name: 'MacroCalc',
   components: {
     // PieChart
   },
   data() {
     return {
-      macrodata: [60, 20, 20],
-      underTDEE: "% Under TDEE",
-      overTDEE: "% Over TDEE",
-      datacollection: null,
-      datacollection1: null
+      // Pie chart future, atm not available
+      // macrodata: [60, 20, 20],
+      // datacollection: null,
+      // datacollection1: null,
+      textTDEE: '% Under/Over TDEE',
     };
   },
   mounted() {
+    // Pie chart future, atm not available
     // this.fillData();
   },
   computed: {
     resultInfo() {
-      return this.$store.state.result;
+      return this.$store.state.data.result;
     },
     macroInfo() {
       return this.$store.state.macro;
     },
     summaryInfo() {
       return this.$store.state.summary;
-    }
+    },
   },
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
+      this.$store.commit('updatePage', value);
     },
     calculateMacro(value) {
-      this.$store.dispatch("calculateMacro", value);
+      this.$store.dispatch('calculateMacro', value);
     },
-    fillData() {
-      this.datacollection = {
-        labels: ["Proteins", "Carbs", "Fat"],
-        datasets: [
-          {
-            label: ["Proteins", "Carbs", "Fat"],
-            backgroundColor: ["#F2AC5C", "#6C9695", "#BEC190"],
-            data: this.macrodata
-          }
-        ]
-      };
-      this.datacollection1 = {
-        labels: ["Proteins", "Carbs", "Fat"],
-        datasets: [
-          {
-            backgroundColor: ["#F2AC5C", "#6C9695", "#BEC190"],
-            data: [59, 20, 20]
-          }
-        ]
-      };
-    }
-  }
+    // Pie chart future, atm not available
+    // fillData() {
+    //   this.datacollection = {
+    //     labels: ['Proteins', 'Carbs', 'Fat'],
+    //     datasets: [
+    //       {
+    //         label: ['Proteins', 'Carbs', 'Fat'],
+    //         backgroundColor: ['#F2AC5C', '#6C9695', '#BEC190'],
+    //         data: this.macrodata,
+    //       },
+    //     ],
+    //   };
+    //   this.datacollection1 = {
+    //     labels: ['Proteins', 'Carbs', 'Fat'],
+    //     datasets: [
+    //       {
+    //         backgroundColor: ['#F2AC5C', '#6C9695', '#BEC190'],
+    //         data: [59, 20, 20],
+    //       },
+    //     ],
+    //   };
+    // },
+  },
 };
 </script>
-<style lang=""></style>
