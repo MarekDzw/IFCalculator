@@ -61,5 +61,33 @@
       "min": 39.9,
       "max": 100
     }
+  ],
+  "headers": [
+    {
+      "text": "Date",
+      "align": "start",
+      "sortable": false,
+      "value": "date"
+    },
+    {
+      "text": "Cycle",
+      "align": "center",
+      "sortable": false,
+      "value": "cycle"
+    },
+    { "text": "Days", "align": "center", "sortable": false, "value": "days" },
+    {
+      "text": "Weight",
+      "align": "center",
+      "sortable": false,
+      "value": "weight"
+    },
+    {
+      "text": "Change",
+      "align": "center",
+      "sortable": false,
+      "value": "change"
+    },
+    { "text": "Total", "align": "center", "sortable": false, "value": "total" }
   ]
 }

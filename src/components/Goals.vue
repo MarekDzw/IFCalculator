@@ -1,7 +1,12 @@
 <template>
   <div>
     <v-container>
-      <v-row>asasdd</v-row>
+      <v-data-table
+        :headers="text.headers"
+        :items="dataInfo.tableItems"
+        :items-per-page="10"
+        class="elevation-1"
+      ></v-data-table>
     </v-container>
     <v-divider></v-divider>
     <v-container class="d-flex justify-center">
@@ -11,11 +16,17 @@
 </template>
 
 <script>
+import text from '../data/text.json';
 export default {
   name: 'Goals',
+  data() {
+    return {
+      text,
+    };
+  },
   computed: {
-    summaryInfo() {
-      return this.$store.state.summary;
+    dataInfo() {
+      return this.$store.state.data;
     },
   },
   methods: {

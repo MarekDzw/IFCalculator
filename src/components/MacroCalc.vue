@@ -7,31 +7,43 @@
             <v-card-title>Schedule</v-card-title>
             <v-text-field
               type="number"
-              v-model="macroInfo.dpc"
+              v-model="dataInfo.macro.dpc"
               label="Days per cycle"
-              @change="calculateMacro(macroInfo)"
+              @change="calculateMacro(dataInfo.macro)"
             />
             <v-text-field
               type="number"
-              v-model="macroInfo.wpc"
+              v-model="dataInfo.macro.wpc"
               label="Workouts per cycle"
-              @change="calculateMacro(macroInfo)"
+              @change="calculateMacro(dataInfo.macro)"
             />
           </v-card>
         </v-col>
 
-        <v-col cols="6" md="5">
+        <v-col cols="6" md="4">
           <v-card class="pa-2 ">
             <v-card-title>Summary</v-card-title>
-            <v-card-text>Cycle TEE:{{ summaryInfo.cycleTee }} kcal</v-card-text>
-            <v-card-text>TDEE: {{ resultInfo.tdee }} kcal</v-card-text>
             <v-card-text
-              >Cycle Calories: {{ summaryInfo.cycleKcal }} kcal</v-card-text
+              >Cycle TEE:{{ dataInfo.summary.cycleTee }} kcal</v-card-text
+            >
+            <v-card-text>TDEE: {{ dataInfo.result.tdee }} kcal</v-card-text>
+            <v-card-text
+              >Cycle Calories:
+              {{ dataInfo.summary.cycleKcal }} kcal</v-card-text
             >
             <v-card-text
-              >Cycle Over/Under: {{ summaryInfo.cycleOU }} kcal</v-card-text
+              >Cycle Over/Under:
+              {{ dataInfo.summary.cycleOU }} kcal</v-card-text
             >
           </v-card>
+        </v-col>
+        <v-col cols="6" md="5">
+          <v-row>
+            <v-date-picker
+              v-model="date1"
+              :show-current="false"
+            ></v-date-picker>
+          </v-row>
         </v-col>
       </v-row>
       <v-row>
@@ -45,17 +57,17 @@
                 cols="1"
                 type="number"
                 :suffix="textTDEE"
-                v-model="macroInfo.restPercent"
-                @change="calculateMacro(macroInfo)"
+                v-model="dataInfo.macro.restPercent"
+                @change="calculateMacro(dataInfo.macro)"
               />
             </v-col>
             <v-col cols="3" md="6">
               <v-text-field
                 persistent-hint
-                :hint="macroInfo.restKcal - resultInfo.tdee + ' kcal'"
+                :hint="dataInfo.macro.restKcal - dataInfo.result.tdee + ' kcal'"
                 solo
                 disabled
-                :value="macroInfo.restKcal"
+                :value="dataInfo.macro.restKcal"
                 suffix="kcal"
               />
             </v-col>
@@ -95,17 +107,19 @@
                 cols="1"
                 type="number"
                 :suffix="textTDEE"
-                v-model="macroInfo.workoutPercent"
-                @change="calculateMacro(macroInfo)"
+                v-model="dataInfo.macro.workoutPercent"
+                @change="calculateMacro(dataInfo.macro)"
               />
             </v-col>
             <v-col cols="3" md="6">
               <v-text-field
                 persistent-hint
-                :hint="macroInfo.workoutKcal - resultInfo.tdee + ' kcal'"
+                :hint="
+                  dataInfo.macro.workoutKcal - dataInfo.result.tdee + ' kcal'
+                "
                 solo
                 disabled
-                :value="macroInfo.workoutKcal"
+                :value="dataInfo.macro.workoutKcal"
                 suffix="kcal"
               />
             </v-col>
@@ -141,7 +155,10 @@ export default {
     return {
       // Pie chart future, atm not available
       // macrodata: [60, 20, 20],
-      // datacollection: null,
+      // datacollection: null,data() {
+
+      date1: new Date().toISOString().substr(0, 10),
+
       // datacollection1: null,
       textTDEE: '% Under/Over TDEE',
     };
@@ -151,14 +168,8 @@ export default {
     // this.fillData();
   },
   computed: {
-    resultInfo() {
-      return this.$store.state.data.result;
-    },
-    macroInfo() {
-      return this.$store.state.macro;
-    },
-    summaryInfo() {
-      return this.$store.state.summary;
+    dataInfo() {
+      return this.$store.state.data;
     },
   },
   methods: {

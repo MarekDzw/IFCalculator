@@ -25,19 +25,29 @@ export default new Vuex.Store({
         perfWeight: null,
         bmiText: null,
       },
-    },
-    macro: {
-      dpc: 7,
-      wpc: 2,
-      workoutKcal: null,
-      restKcal: null,
-      restPercent: -20,
-      workoutPercent: 20,
-    },
-    summary: {
-      cycleTee: null,
-      cycleKcal: null,
-      cycleOU: null,
+      macro: {
+        dpc: 7,
+        wpc: 2,
+        workoutKcal: null,
+        restKcal: null,
+        restPercent: -20,
+        workoutPercent: 20,
+      },
+      summary: {
+        cycleTee: null,
+        cycleKcal: null,
+        cycleOU: null,
+      },
+      tableItems: [
+        {
+          date: '1/13/2021',
+          cycle: 0,
+          days: 0,
+          weight: 99,
+          change: 0.69,
+          total: 0.69,
+        },
+      ],
     },
   },
   mutations: {
@@ -62,15 +72,15 @@ export default new Vuex.Store({
       state.data.result.bmi = value.bmi;
     },
     updateMacro(state, value) {
-      state.macro.restPercent = value.restPercent;
-      state.macro.workoutPercent = value.workoutPercent;
-      state.macro.workoutKcal = value.workoutKcal.toFixed(0);
-      state.macro.restKcal = value.restKcal.toFixed(0);
+      state.data.macro.restPercent = value.restPercent;
+      state.data.macro.workoutPercent = value.workoutPercent;
+      state.data.macro.workoutKcal = value.workoutKcal.toFixed(0);
+      state.data.macro.restKcal = value.restKcal.toFixed(0);
     },
     updateSummary(state, value) {
-      state.summary.cycleTee = value.cycleTee.toFixed(0);
-      state.summary.cycleKcal = value.cycleKcal.toFixed(0);
-      state.summary.cycleOU = value.cycleOU.toFixed(0);
+      state.data.summary.cycleTee = value.cycleTee.toFixed(0);
+      state.data.summary.cycleKcal = value.cycleKcal.toFixed(0);
+      state.data.summary.cycleOU = value.cycleOU.toFixed(0);
     },
     updatePerfWeight(state, value) {
       state.data.result.perfWeight = value.toFixed(2);

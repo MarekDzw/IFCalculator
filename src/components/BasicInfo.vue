@@ -92,7 +92,7 @@
       <v-btn
         color="primary"
         :disabled="!dataInfo.result.bmr"
-        @click="updatePage(3), calculateMacro(macroInfo)"
+        @click="updatePage(3), calculateMacro(dataInfo.macro)"
         >Next step</v-btn
       >
     </v-container>
@@ -111,9 +111,6 @@ export default {
   computed: {
     dataInfo() {
       return this.$store.state.data;
-    },
-    macroInfo() {
-      return this.$store.state.macro;
     },
   },
   methods: {
