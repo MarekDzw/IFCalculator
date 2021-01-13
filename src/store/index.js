@@ -8,6 +8,7 @@ export default new Vuex.Store({
     page: 1,
     disclaimerCheck: false,
     data: {
+      date: new Date().toISOString().substr(0, 10),
       height: null,
       weight: null,
       age: null,
@@ -40,7 +41,7 @@ export default new Vuex.Store({
       },
       tableItems: [
         {
-          date: '1/13/2021',
+          date: new Date().toISOString().substr(0, 10),
           cycle: 0,
           days: 0,
           weight: 99,

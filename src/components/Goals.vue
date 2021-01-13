@@ -1,6 +1,14 @@
 <template>
   <div>
     <v-container>
+      <v-col cols="6" md="5">
+        <v-row>
+          <v-date-picker
+            v-model="dataInfo.date"
+            :show-current="false"
+          ></v-date-picker>
+        </v-row>
+      </v-col>
       <v-data-table
         :headers="text.headers"
         :items="dataInfo.tableItems"

@@ -37,14 +37,6 @@
             >
           </v-card>
         </v-col>
-        <v-col cols="6" md="5">
-          <v-row>
-            <v-date-picker
-              v-model="date1"
-              :show-current="false"
-            ></v-date-picker>
-          </v-row>
-        </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
@@ -156,8 +148,6 @@ export default {
       // Pie chart future, atm not available
       // macrodata: [60, 20, 20],
       // datacollection: null,data() {
-
-      date1: new Date().toISOString().substr(0, 10),
 
       // datacollection1: null,
       textTDEE: '% Under/Over TDEE',
