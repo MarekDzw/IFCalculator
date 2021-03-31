@@ -6,14 +6,12 @@ Rewritten old Intermittent Fasting Calculator to run on modern web browsers.
 
 ### TODO
 
-- [ ] Basic info
-  - [ ] Better display/colors
+
 - [ ] Macro Calculator
   - [ ] Calculate kg lost/gain in summary
-  - [ ] Display proper suffix depends on workout/rest percentage
-  - [ ] Add color red/green on workout/rest kcal depends on over/under
-  - [ ] Better display/colors
 - [ ] Goals
-  - [ ] Add data picker
+  - [X] Add data picker
+    - [ ] Display data picker in select input
   - [ ] Add goal set
+    - [ ] Set total weight loss in kg
   - [ ] Display grid
