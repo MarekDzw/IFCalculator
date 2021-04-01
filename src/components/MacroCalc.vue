@@ -39,7 +39,7 @@
           <v-card class="pa-2">
             <v-card-title>Cycle change in kg:</v-card-title>
             <v-card-text class="title text-lg-center">
-              {{ dataInfo.summary.cycleChangeKG }}
+              {{ dataInfo.summary.cycleChangeKG }} kg
             </v-card-text>
           </v-card>
         </v-col>
