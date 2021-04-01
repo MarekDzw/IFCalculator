@@ -1,21 +1,20 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
+import text from "../data/text.json";
 
 Vue.use(Vuex);
-import text from '../data/text.json';
 export default new Vuex.Store({
   state: {
     page: 1,
     disclaimerCheck: false,
     data: {
-      date: new Date().toISOString().substr(0, 10),
       height: null,
       weight: null,
       age: null,
       activity: null,
       gender: null,
       bodyfat: undefined,
-      formula: 'mifflin',
+      formula: "mifflin",
       gendDiff: undefined,
       result: {
         bmr: null,
@@ -38,6 +37,7 @@ export default new Vuex.Store({
         cycleTee: null,
         cycleKcal: null,
         cycleOU: null,
+        cycleChangeKG: null,
       },
       tableItems: [
         {
@@ -82,31 +82,35 @@ export default new Vuex.Store({
       state.data.summary.cycleTee = value.cycleTee.toFixed(0);
       state.data.summary.cycleKcal = value.cycleKcal.toFixed(0);
       state.data.summary.cycleOU = value.cycleOU.toFixed(0);
+      state.data.summary.cycleChangeKG = value.cycleChangeKG.toFixed(2);
     },
     updatePerfWeight(state, value) {
       state.data.result.perfWeight = value.toFixed(2);
     },
+    updateDate(state, value) {
+      state.data.tableItems[0].date = value;
+    },
   },
   actions: {
     calculateBMR({ commit }, data) {
-      if (data.formula == 'mifflin') {
+      if (data.formula === "mifflin") {
         let value =
           10 * data.weight + 6.25 * data.height - 5 * data.age + data.gendDiff;
-        commit('updateBMR', value);
+        commit("updateBMR", value);
       }
-      if (data.formula == 'katch') {
+      if (data.formula === "katch") {
         let value = Math.round(370 + 21.6 * this.state.data.result.lbm);
-        commit('updateBMR', value);
+        commit("updateBMR", value);
       }
-      if (data.formula == 'harris') {
-        if (data.gender == 'male') {
+      if (data.formula === "harris") {
+        if (data.gender === "male") {
           let value = Math.floor(
             13.397 * data.weight +
               4.799 * data.height -
               5.677 * data.age +
               data.gendDiff
           );
-          commit('updateBMR', value);
+          commit("updateBMR", value);
         } else {
           let value = Math.floor(
             9.247 * data.weight +
@@ -114,7 +118,7 @@ export default new Vuex.Store({
               4.33 * data.age +
               data.gendDiff
           );
-          commit('updateBMR', value);
+          commit("updateBMR", value);
         }
       }
     },
@@ -125,16 +129,16 @@ export default new Vuex.Store({
         lbm: lbm,
         lbmFat: lbmFat,
       };
-      commit('updateLBM', value);
+      commit("updateLBM", value);
     },
     calculatePerfWeight({ commit }) {
       let height = this.state.data.height / 100;
       let value = 2.2 * 22 + 3.5 * 22 * (height - 1.5);
-      commit('updatePerfWeight', value);
+      commit("updatePerfWeight", value);
     },
     calculateTDEE({ commit }, data) {
       let value = Math.floor(data.activity * this.state.data.result.bmr);
-      commit('updateTDEE', value);
+      commit("updateTDEE", value);
     },
     calculateBMI({ commit }, data) {
       let bmi = Math.floor(
@@ -145,34 +149,36 @@ export default new Vuex.Store({
         bmi: bmi,
         bmiText: bmiText,
       };
-      commit('updateBMI', value);
+      commit("updateBMI", value);
     },
     calculateMacro({ commit }, data) {
       let value = data;
-
       let tdee = this.state.data.result.tdee;
-
       let workoutKcal = (tdee * (100 + Number(value.workoutPercent))) / 100;
       let restKcal = (tdee * (100 + Number(value.restPercent))) / 100;
-
       let restDays = value.dpc - value.wpc;
-
       let cycleTee = tdee * value.dpc;
       let cycleKcal = restDays * restKcal + value.wpc * workoutKcal;
       let cycleOU = cycleKcal - cycleTee;
-
+      let cycleChangeKG = 0.000133 * cycleOU;
       value.restKcal = restKcal;
       value.workoutKcal = workoutKcal;
       let valueSummary = {
         cycleKcal: cycleKcal,
         cycleTee: cycleTee,
         cycleOU: cycleOU,
+        cycleChangeKG: cycleChangeKG,
       };
-      commit('updateMacro', value);
-      commit('updateSummary', valueSummary);
+      commit("updateMacro", value);
+      commit("updateSummary", valueSummary);
+    },
+    setNewDate({ commit }, data) {
+      let value = data;
+      commit("updateDate", value);
     },
   },
 });
+
 function checkBMI(value) {
   let array = text.bmiIndicator;
   for (let i = 0; i < array.length; i++) {
