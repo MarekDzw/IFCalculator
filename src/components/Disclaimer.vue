@@ -2,7 +2,7 @@
   <div>
     <v-container class="scroll">
       <v-card-title>IF Calculator Terms and Conditions of Use</v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         PLEASE READ THESE TERMS AND CONDITIONS OF USE CAREFULLY BEFORE USING
         THIS PROGRAM. By using the Program, you signify your assent to these
         Terms and Conditions. If you do not agree to all of these Terms and
@@ -12,7 +12,7 @@
         those changes.
       </v-card-text>
       <v-card-title>THE PROGRAM DOES NOT PROVIDE MEDICAL ADVICE.</v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         The full contents of the Program, such as text, comments, graphics,
         images, and other material contained in the Program are for
         informational purposes only. This Program has not been evaluated by the
@@ -30,7 +30,7 @@
       <v-card-title>
         RELEASE OF LIABILITY OF PROGRAM AND PROGRAM CREATORS/OWNERS
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         The use of the Program is at your own risk. In no event shall the
         Program, its owners, creators and/or programmers, or any third parties
         mentioned in the Program be liable for any damages in the future
@@ -50,7 +50,7 @@
         nutritional daily diet or beginning an exercise program.
       </v-card-text>
       <v-card-title>COMPLETE AGREEMENT.</v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         These Terms and Conditions constitute the agreement between you and this
         Program with respect to the use of the Program. User, for themself,
         their heirs and assigns, hereby release the Program and its Owner(s)/
@@ -72,20 +72,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+
+
 export default {
   name: "Disclaimer",
   methods: {
-    updatePage(value) {
+    updatePage(value: number) {
       this.$store.commit("updatePage", value);
     }
   },
   computed: {
     checkbox: {
-      get() {
-        return this.$store.state.disclaimerCheck;
+      get(): boolean {
+        console.log(this.$store.state)
+        return this.$store.state.data.state.data.disclaimerCheck;
       },
       set(value) {
+        console.log(value)
         this.$store.commit("updateDisclaimerCheckbox", value);
       }
     }

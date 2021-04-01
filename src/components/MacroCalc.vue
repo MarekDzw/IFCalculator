@@ -6,16 +6,16 @@
           <v-card class="pa-2">
             <v-card-title class="text-center">Schedule:</v-card-title>
             <v-text-field
-              v-model="dataInfo.macro.dpc"
+              v-model="dataInfo"
               label="Days per cycle"
               type="number"
-              @change="calculateMacro(dataInfo.macro)"
+              @change="calculateMacro(dataInfo)"
             />
             <v-text-field
-              v-model="dataInfo.macro.wpc"
+              v-model="dataInfo"
               label="Workouts per cycle"
               type="number"
-              @change="calculateMacro(dataInfo.macro)"
+              @change="calculateMacro(dataInfo)"
             />
           </v-card>
         </v-col>
@@ -24,14 +24,14 @@
           <v-card class="pa-2">
             <v-card-title class="text-lg-center">Summary:</v-card-title>
             <v-card-text
-              >Cycle TEE:{{ dataInfo.summary.cycleTee }} kcal
+              >Cycle TEE:{{ dataInfo}} kcal
             </v-card-text>
-            <v-card-text>TDEE: {{ dataInfo.result.tdee }} kcal</v-card-text>
+            <v-card-text>TDEE: {{ dataInfo }} kcal</v-card-text>
             <v-card-text
-              >Cycle Calories: {{ dataInfo.summary.cycleKcal }} kcal
+              >Cycle Calories: {{ dataInfo }} kcal
             </v-card-text>
             <v-card-text
-              >Cycle Over/Under: {{ dataInfo.summary.cycleOU }} kcal
+              >Cycle Over/Under: {{ dataInfo}} kcal
             </v-card-text>
           </v-card>
         </v-col>
@@ -39,7 +39,7 @@
           <v-card class="pa-2">
             <v-card-title>Cycle change in kg:</v-card-title>
             <v-card-text class="title text-lg-center">
-              {{ dataInfo.summary.cycleChangeKG }} kg
+              {{ dataInfo}} kg
             </v-card-text>
           </v-card>
         </v-col>
@@ -50,18 +50,18 @@
           <v-row>
             <v-col cols="3" md="6">
               <v-text-field
-                v-model="dataInfo.macro.restPercent"
+                v-model="dataInfo"
                 :suffix="textTDEE"
                 cols="1"
                 solo
                 type="number"
-                @change="calculateMacro(dataInfo.macro)"
+                @change="calculateMacro(dataInfo)"
               />
             </v-col>
             <v-col cols="3" md="6">
               <v-text-field
-                :hint="dataInfo.macro.restKcal - dataInfo.result.tdee + ' kcal'"
-                :value="dataInfo.macro.restKcal"
+                :hint="dataInfo - dataInfo + ' kcal'"
+                :value="dataInfo"
                 disabled
                 persistent-hint
                 solo
@@ -76,20 +76,20 @@
           <v-row>
             <v-col cols="3" md="6">
               <v-text-field
-                v-model="dataInfo.macro.workoutPercent"
+                v-model="dataInfo"
                 :suffix="textTDEE"
                 cols="1"
                 solo
                 type="number"
-                @change="calculateMacro(dataInfo.macro)"
+                @change="calculateMacro(dataInfo)"
               />
             </v-col>
             <v-col cols="3" md="6">
               <v-text-field
                 :hint="
-                  dataInfo.macro.workoutKcal - dataInfo.result.tdee + ' kcal'
+                  dataInfo- dataInfo + ' kcal'
                 "
-                :value="dataInfo.macro.workoutKcal"
+                :value="dataInfo"
                 disabled
                 persistent-hint
                 solo

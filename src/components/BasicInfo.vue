@@ -52,7 +52,7 @@
         </v-col>
         <v-col cols="6" md="8">
           <v-card class="pa-2" outlined tile>
-            <p>Basal Metabolic Rate (BMR) {{ dataInfo.result.bmr }} kcal</p>
+            <p class="text-left">Basal Metabolic Rate (BMR) {{ dataInfo}} kcal</p>
             <v-radio-group
               @change="calculateData(dataInfo)"
               v-model="dataInfo.formula"
@@ -72,17 +72,17 @@
           <v-card class="pa-2" outlined tile>
             <p class="text-left">
               Total Daily Energy Expenditure (TDEE)
-              {{ dataInfo.result.tdee }} kcal
+              {{ dataInfo }} kcal
             </p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Body Mass Index (BMI) {{ dataInfo.result.bmi }}</p>
-            <p class="text-left">{{ dataInfo.result.bmiText }}</p>
+            <p class="text-left">Body Mass Index (BMI) {{ dataInfo }}</p>
+            <p class="text-left">{{ dataInfo }}</p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Lean Body Mass (LBM) {{ dataInfo.result.lbm }} kg</p>
-            <p class="text-left">Fat Body Mass {{ dataInfo.result.lbmFat }} kg</p>
-            <p class="text-left">Perfect weight: {{ dataInfo.result.perfWeight }} kg</p>
+            <p class="text-left">Lean Body Mass (LBM) {{ dataInfo }} kg</p>
+            <p class="text-left">Fat Body Mass {{ dataInfo }} kg</p>
+            <p class="text-left">Perfect weight: {{ dataInfo }} kg</p>
           </v-card>
         </v-col>
       </v-row>
@@ -91,9 +91,9 @@
     <v-container class="d-flex justify-center">
       <v-btn
         color="primary"
-        :disabled="!dataInfo.result.bmr"
+        :disabled="!dataInfo"
         @click="
-          updatePage(3), setBasicInfo(dataInfo), calculateMacro(dataInfo.macro)
+          updatePage(3), setBasicInfo(dataInfo), calculateMacro(dataInfo)
         "
         >Next step</v-btn
       >
@@ -112,7 +112,7 @@ export default {
   },
   computed: {
     dataInfo() {
-      return this.$store.state.data;
+      return this.$store.state;
     }
   },
   methods: {

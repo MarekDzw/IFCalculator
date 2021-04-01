@@ -1,6 +1,6 @@
 import { fillData, checkBMI } from "@/store/utils";
 
-export default {
+export const actions = {
   calculateBMR({ commit }, data) {
     if (data.formula === "mifflin") {
       let value =
@@ -36,7 +36,7 @@ export default {
     let lbm = data.weight - lbmFat;
     let value = {
       lbm: lbm,
-      lbmFat: lbmFat
+      lbmFat: lbmFat,
     };
     commit("updateLBM", value);
   },
@@ -56,7 +56,7 @@ export default {
     let bmiText = checkBMI(bmi);
     let value = {
       bmi: bmi,
-      bmiText: bmiText
+      bmiText: bmiText,
     };
     commit("updateBMI", value);
   },
@@ -76,7 +76,7 @@ export default {
       cycleKcal: cycleKcal,
       cycleTee: cycleTee,
       cycleOU: cycleOU,
-      cycleChangeKG: cycleChangeKG
+      cycleChangeKG: cycleChangeKG,
     };
     commit("updateMacro", value);
     commit("updateSummary", valueSummary);
@@ -91,5 +91,5 @@ export default {
   calculateGoal({ commit }, data) {
     let value = fillData(data);
     commit("updateGoal", value);
-  }
+  },
 };

@@ -7,14 +7,14 @@
             ref="menu"
             v-model="menu"
             :close-on-content-click="false"
-            :return-value.sync="goalInfo.date"
+            :return-value.sync="goalInfo"
             transition="scale-transition"
             offset-y
             min-width="auto"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="goalInfo.date"
+                v-model="goalInfo"
                 label="Pick a start date"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -22,14 +22,14 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="goalInfo.date" no-title scrollable>
+            <v-date-picker v-model="goalInfo" no-title scrollable>
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
               <v-btn
                 text
                 color="primary"
                 @click="
-                  setNewDate(goalInfo.date);
+                  setNewDate(goalInfo);
                   menu = false;
                 "
               >
@@ -42,7 +42,7 @@
           <v-text-field
             :step="0.5"
             type="number"
-            v-model="goalInfo.goal"
+            v-model="goalInfo"
             label="Set goal in kg"
             @change="calculateGoal(goalInfo)"
             suffix="kg"
@@ -51,7 +51,7 @@
       </v-row>
       <v-data-table
         :headers="text.headers"
-        :items="dataInfo"
+        :items="dataInfo.tableItems"
         :items-per-page="10"
         class="elevation-1"
       ></v-data-table>
@@ -75,10 +75,10 @@ export default {
   },
   computed: {
     dataInfo() {
-      return this.$store.state.data.tableItems;
+      return this.$store.state;
     },
     goalInfo() {
-      return this.$store.state.data;
+      return this.$store.state.data
     }
   },
   methods: {

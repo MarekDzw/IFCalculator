@@ -1,59 +1,17 @@
 import Vue from "vue";
-import Vuex from "vuex";
-import actions from "@/store/actions";
-import mutations from "@/store/mutations";
+import Vuex, { StoreOptions } from "vuex";
+import { data } from "@/store/state";
+import { State } from "@/store/types";
+import { mutations } from "@/store/mutations";
 
 Vue.use(Vuex);
-export default new Vuex.Store({
+
+const store: StoreOptions<State> = {
   state: {
-    page: 1,
-    disclaimerCheck: false,
-    data: {
-      height: null,
-      weight: null,
-      age: null,
-      activity: null,
-      gender: null,
-      bodyfat: undefined,
-      date: new Date().toISOString().substr(0, 10),
-      formula: "mifflin",
-      gendDiff: undefined,
-      goal: -5,
-      result: {
-        bmr: null,
-        tdee: null,
-        lbm: null,
-        lbmFat: null,
-        bmi: null,
-        perfWeight: null,
-        bmiText: null
-      },
-      macro: {
-        dpc: 7,
-        wpc: 2,
-        workoutKcal: null,
-        restKcal: null,
-        restPercent: -20,
-        workoutPercent: 20
-      },
-      summary: {
-        cycleTee: null,
-        cycleKcal: null,
-        cycleOU: null,
-        cycleChangeKG: null
-      },
-      tableItems: [
-        {
-          date: new Date().toISOString().substr(0, 10),
-          cycle: 0,
-          days: 0,
-          weight: null,
-          change: null,
-          total: null
-        }
-      ]
-    }
+    data,
   },
-  mutations,
-  actions
-});
+  modules: {
+    mutations,
+  },
+};
+export default new Vuex.Store<State>(store);

@@ -1,6 +1,6 @@
 import text from "@/data/text.json";
 
-export function checkBMI(value) {
+export function checkBMI(value: any) {
   let array = text.bmiIndicator;
   for (let i = 0; i < array.length; i++) {
     if (array[i].min < value && array[i].max > value) {
@@ -8,7 +8,7 @@ export function checkBMI(value) {
     }
   }
 }
-export function fillData(value) {
+export function fillData(value: any) {
   let i = 0;
   let items = [];
   let goal = Number(value.goal);
