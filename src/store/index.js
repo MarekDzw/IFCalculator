@@ -14,8 +14,10 @@ export default new Vuex.Store({
       activity: null,
       gender: null,
       bodyfat: undefined,
+      date: new Date().toISOString().substr(0, 10),
       formula: "mifflin",
       gendDiff: undefined,
+      goal: -5,
       result: {
         bmr: null,
         tdee: null,
@@ -44,9 +46,9 @@ export default new Vuex.Store({
           date: new Date().toISOString().substr(0, 10),
           cycle: 0,
           days: 0,
-          weight: 99,
-          change: 0.69,
-          total: 0.69,
+          weight: null,
+          change: null,
+          total: null,
         },
       ],
     },
@@ -89,6 +91,19 @@ export default new Vuex.Store({
     },
     updateDate(state, value) {
       state.data.tableItems[0].date = value;
+    },
+    updateBasicInfo(state, value) {
+      let { height, weight, age, activity, gender, bodyfat } = value;
+      state.data.height = height;
+      state.data.weight = weight;
+      state.data.age = age;
+      state.data.activity = activity;
+      state.data.gender = gender;
+      state.data.bodyfat = bodyfat;
+    },
+    updateGoal(state, value) {
+      state.data.tableItems = [];
+      state.data.tableItems = value;
     },
   },
   actions: {
@@ -176,6 +191,13 @@ export default new Vuex.Store({
       let value = data;
       commit("updateDate", value);
     },
+    setBasicInfo({ commit }, data) {
+      commit("updateBasicInfo", data);
+    },
+    calculateGoal({ commit }, data) {
+      let value = fillData(data);
+      commit("updateGoal", value);
+    },
   },
 });
 
@@ -186,4 +208,40 @@ function checkBMI(value) {
       return array[i].text;
     }
   }
+}
+function fillData(value) {
+  let i = 0;
+  let items = [];
+  let goal = Number(value.goal);
+  let change = Number(value.summary.cycleChangeKG);
+  let x = goal / change;
+  console.log(value);
+  let item = {
+    date: new Date().toISOString().substr(0, 10),
+    cycle: i,
+    days: i,
+    weight: Number(value.weight),
+    change: Number(value.summary.cycleChangeKG),
+    total:
+      Number(value.summary.cycleChangeKG) + Number(value.summary.cycleChangeKG),
+  };
+  i++;
+  items.push(item);
+  console.log(items);
+  while (x > 0) {
+    item = {
+      date: items[i - 1].date + 1,
+      cycle: i,
+      days: items[i - 1].days + Number(value.macro.dpc),
+      weight: items[i - 1].weight + Number(value.summary.cycleChangeKG),
+      change: value.summary.cycleChangeKG,
+      total: items[i - 1].total + Number(value.summary.cycleChangeKG),
+    };
+
+    goal += change;
+    i++;
+    x--;
+    items.push(item);
+  }
+  return items;
 }

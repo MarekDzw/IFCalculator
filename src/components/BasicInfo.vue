@@ -92,7 +92,7 @@
       <v-btn
         color="primary"
         :disabled="!dataInfo.result.bmr"
-        @click="updatePage(3), calculateMacro(dataInfo.macro)"
+        @click="updatePage(3), setBasicInfo(dataInfo), calculateMacro(dataInfo.macro)"
         >Next step</v-btn
       >
     </v-container>
@@ -119,6 +119,9 @@ export default {
     },
     calculateMacro(value) {
       this.$store.dispatch('calculateMacro', value);
+    },
+    setBasicInfo(value){
+      this.$store.dispatch('setBasicInfo', value);
     },
     calculateData(value) {
       if (Object.values(value).includes(null)) {
