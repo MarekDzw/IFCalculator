@@ -85,12 +85,10 @@ export default {
   computed: {
     checkbox: {
       get(): boolean {
-        console.log(this.$store.state)
-        return this.$store.state.data.state.data.disclaimerCheck;
+        return this.$store.state.disclaimerCheck;
       },
-      set(value) {
-        console.log(value)
-        this.$store.commit("updateDisclaimerCheckbox", value);
+      set(value: boolean) {
+        this.$store.commit("updateDisclaimer", value);
       }
     }
   }

@@ -2,55 +2,54 @@ import { State } from "@/store/types";
 import { MutationTree } from "vuex";
 
 export const mutations: MutationTree<State> = {
-  updateDisclaimerCheckbox(state, value) {
-    state.data.disclaimerCheck = value;
+  updateDisclaimer(state, value) {
+    state.disclaimerCheck = value;
   },
-  updatePage(state: State, value: number) {
-    state.data.page = value;
+  updatePage(state, value: number) {
+    state.page = value;
   },
-  updateBMR(state: State, value) {
-    state.data.result.bmr = value.toFixed(0);
+  updateBMR(state, value) {
+    state.result.bmr = value.toFixed(0);
   },
-  updateLBM(state: State, value) {
-    state.data.result.lbm = value.lbm.toFixed(2);
-    state.data.result.lbmFat = value.lbmFat;
+  updateLbm(state, value) {
+    state.result.lbm = value.lbm.toFixed(2);
+    state.result.lbmFat = value.lbmFat;
   },
-  updateTDEE(state: State, value) {
-    state.data.result.tdee = value;
+  updateTDEE(state, value) {
+    state.result.tdee = value;
   },
-  updateBMI(state: State, value) {
-    state.data.result.bmiText = value.bmiText;
-    state.data.result.bmi = value.bmi;
+  updateBMI(state, value) {
+    state.result.bmiText = value.bmiText;
+    state.result.bmi = value.bmi;
   },
-  updateMacro(state: State, value) {
-    state.data.macro.restPercent = value.restPercent;
-    state.data.macro.workoutPercent = value.workoutPercent;
-    state.data.macro.workoutKcal = value.workoutKcal.toFixed(0);
-    state.data.macro.restKcal = value.restKcal.toFixed(0);
+  updateMacro(state, value) {
+    state.macro.restPercent = value.restPercent;
+    state.macro.workoutPercent = value.workoutPercent;
+    state.macro.workoutKcal = value.workoutKcal.toFixed(0);
+    state.macro.restKcal = value.restKcal.toFixed(0);
   },
-  updateSummary(state: State, value) {
-    state.data.summary.cycleTee = value.cycleTee.toFixed(0);
-    state.data.summary.cycleKcal = value.cycleKcal.toFixed(0);
-    state.data.summary.cycleOU = value.cycleOU.toFixed(0);
-    state.data.summary.cycleChangeKG = value.cycleChangeKG.toFixed(2);
+  updateSummary(state, value) {
+    state.summary.cycleTee = value.cycleTee.toFixed(0);
+    state.summary.cycleKcal = value.cycleKcal.toFixed(0);
+    state.summary.cycleOU = value.cycleOU.toFixed(0);
+    state.summary.cycleChangeKG = value.cycleChangeKG.toFixed(2);
   },
-  updatePerfWeight(state: State, value) {
-    state.data.result.perfWeight = value.toFixed(2);
+  updatePerfWeight(state, value) {
+    state.result.perfWeight = value.toFixed(2);
   },
-  updateDate(state: State, value) {
-    state.data.tableItems[0].date = value;
+  updateDate(state, value) {
+    state.tableItems[0].date = value;
   },
-  updateBasicInfo(state: State, value) {
+  updateBasicInfo(state, value) {
     let { height, weight, age, activity, gender, bodyfat } = value;
-    state.data.height = height;
-    state.data.weight = weight;
-    state.data.age = age;
-    state.data.activity = activity;
-    state.data.gender = gender;
-    state.data.bodyfat = bodyfat;
+    state.height = height;
+    state.weight = weight;
+    state.age = age;
+    state.activity = activity;
+    state.gender = gender;
+    state.bodyfat = bodyfat;
   },
-  updateGoal(state: State, value) {
-    state.data.tableItems = [];
-    state.data.tableItems = value;
+  updateGoal(state, value) {
+    state.tableItems = value;
   },
 };

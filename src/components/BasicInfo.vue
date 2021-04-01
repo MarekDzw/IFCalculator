@@ -52,7 +52,7 @@
         </v-col>
         <v-col cols="6" md="8">
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Basal Metabolic Rate (BMR) {{ dataInfo}} kcal</p>
+            <p class="text-left">Basal Metabolic Rate (BMR) {{ dataInfo.result.bmr }} kcal</p>
             <v-radio-group
               @change="calculateData(dataInfo)"
               v-model="dataInfo.formula"
@@ -72,17 +72,17 @@
           <v-card class="pa-2" outlined tile>
             <p class="text-left">
               Total Daily Energy Expenditure (TDEE)
-              {{ dataInfo }} kcal
+              {{ dataInfo.result.tdee }} kcal
             </p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Body Mass Index (BMI) {{ dataInfo }}</p>
-            <p class="text-left">{{ dataInfo }}</p>
+            <p class="text-left">Body Mass Index (BMI) {{ dataInfo.result.bmi }}</p>
+            <p class="text-left">{{ dataInfo.result.bmiText }}</p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Lean Body Mass (LBM) {{ dataInfo }} kg</p>
-            <p class="text-left">Fat Body Mass {{ dataInfo }} kg</p>
-            <p class="text-left">Perfect weight: {{ dataInfo }} kg</p>
+            <p class="text-left">Lean Body Mass (LBM) {{ dataInfo.result.lbm }} kg</p>
+            <p class="text-left">Fat Body Mass {{ dataInfo.result.lbmFat }} kg</p>
+            <p class="text-left">Perfect weight: {{ dataInfo.result.perfWeight}} kg</p>
           </v-card>
         </v-col>
       </v-row>

@@ -1,6 +1,8 @@
 import { fillData, checkBMI } from "@/store/utils";
+import { ActionTree } from "vuex";
+import { State } from "@/store/types";
 
-export const actions = {
+export const actions: ActionTree<State, State> = {
   calculateBMR({ commit }, data) {
     if (data.formula === "mifflin") {
       let value =
@@ -8,7 +10,7 @@ export const actions = {
       commit("updateBMR", value);
     }
     if (data.formula === "katch") {
-      let value = Math.round(370 + 21.6 * this.state.data.result.lbm);
+      let value = Math.round(370 + 21.6 * this.state.result.lbm);
       commit("updateBMR", value);
     }
     if (data.formula === "harris") {
@@ -41,12 +43,12 @@ export const actions = {
     commit("updateLBM", value);
   },
   calculatePerfWeight({ commit }) {
-    let height = this.state.data.height / 100;
+    let height = this.state.height / 100;
     let value = 2.2 * 22 + 3.5 * 22 * (height - 1.5);
     commit("updatePerfWeight", value);
   },
   calculateTDEE({ commit }, data) {
-    let value = Math.floor(data.activity * this.state.data.result.bmr);
+    let value = Math.floor(data.activity * this.state.result.bmr);
     commit("updateTDEE", value);
   },
   calculateBMI({ commit }, data) {
@@ -62,7 +64,7 @@ export const actions = {
   },
   calculateMacro({ commit }, data) {
     let value = data;
-    let tdee = this.state.data.result.tdee;
+    let tdee = this.state.result.tdee;
     let workoutKcal = (tdee * (100 + Number(value.workoutPercent))) / 100;
     let restKcal = (tdee * (100 + Number(value.restPercent))) / 100;
     let restDays = value.dpc - value.wpc;
