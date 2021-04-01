@@ -1,51 +1,56 @@
 <template>
   <div>
     <v-container>
-      <v-col cols="6" md="5">
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              :return-value.sync="dataInfo.date"
-              transition="scale-transition"
-              offset-y
-              min-width="auto"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="dataInfo[0].date"
-                  label="Pick a start date"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker v-model="dataInfo[0].date" no-title scrollable>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="menu = false">
-                  Cancel
-                </v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="
-                    setNewDate(dataInfo[0].date);
-                    menu = false;
-                  "
-                >
-                  OK
-                </v-btn>
-              </v-date-picker>
-            </v-menu>
-          </v-col>
-        </v-row>
-      </v-col>
+      <v-row>
+        <v-col cols="12" md="2">
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="summaryInfo.date"
+                label="Pick a start date"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="summaryInfo.date" no-title scrollable>
+              <v-spacer></v-spacer>
+              <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
+              <v-btn
+                text
+                color="primary"
+                @click="
+                  setNewDate(summaryInfo.date);
+                  menu = false;
+                "
+              >
+                OK
+              </v-btn>
+            </v-date-picker>
+          </v-menu>
+        </v-col>
+        <v-col cols="12" md="2">
+          <v-text-field
+            :step="0.5"
+            type="number"
+            v-model.number="summaryInfo.goal"
+            label="Set goal in kg"
+            @change="setGoal(summaryInfo.goal)"
+            suffix="kg"
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <v-data-table
         :headers="text.headers"
-        :items="dataInfo"
+        :items="tableItems"
         :items-per-page="10"
         class="elevation-1"
       ></v-data-table>
@@ -57,7 +62,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ActionsTypes } from "@/store/modules/actions-types";
+import { MutationsTypes } from "@/store/modules/mutations-types";
 import text from "../data/text.json";
 export default {
   name: "Goals",
@@ -68,16 +75,22 @@ export default {
     };
   },
   computed: {
-    dataInfo() {
-      return this.$store.state.data.tableItems;
+    summaryInfo() {
+      return this.$store.state.summary;
+    },
+    tableItems() {
+      return this.$store.getters.tableItems;
     }
   },
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
+      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
     setNewDate(value) {
-      this.$store.dispatch("setNewDate", value);
+      this.$store.dispatch(ActionsTypes.SET_NEWDATE, value);
+    },
+    setGoal(value) {
+      this.$store.dispatch(ActionsTypes.SET_GOAL, value);
     }
   }
 };
