@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       text,
-      menu: false,
+      menu: false
     };
   },
   computed: {
@@ -79,7 +79,7 @@ export default {
     },
     goalInfo() {
       return this.$store.state.data;
-    },
+    }
   },
   methods: {
     updatePage(value) {
@@ -88,10 +88,10 @@ export default {
     setNewDate(value) {
       this.$store.dispatch("setNewDate", value);
     },
-    calculateGoal(value){
+    calculateGoal(value) {
       this.$store.dispatch("calculateGoal", value);
     }
-  },
+  }
 };
 </script>
 <style lang=""></style>

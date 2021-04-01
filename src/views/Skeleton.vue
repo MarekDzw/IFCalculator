@@ -4,7 +4,9 @@
       <v-card-title>Intermitten Fasting Calculator</v-card-title>
       <v-stepper v-model="page">
         <v-stepper-header>
-          <v-stepper-step :complete="page > 1" step="1">Disclaimer</v-stepper-step>
+          <v-stepper-step :complete="page > 1" step="1"
+            >Disclaimer</v-stepper-step
+          >
           <v-divider></v-divider>
           <v-stepper-step step="2">Basic Info</v-stepper-step>
           <v-divider></v-divider>

@@ -49,5 +49,5 @@ export default {
   updateGoal(state, value) {
     state.data.tableItems = [];
     state.data.tableItems = value;
-  },
+  }
 };

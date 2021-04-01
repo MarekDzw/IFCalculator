@@ -70,19 +70,19 @@
             </v-radio-group>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p>
+            <p class="text-left">
               Total Daily Energy Expenditure (TDEE)
               {{ dataInfo.result.tdee }} kcal
             </p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p>Body Mass Index (BMI) {{ dataInfo.result.bmi }}</p>
-            <p>{{ dataInfo.result.bmiText }}</p>
+            <p class="text-left">Body Mass Index (BMI) {{ dataInfo.result.bmi }}</p>
+            <p class="text-left">{{ dataInfo.result.bmiText }}</p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p>Lean Body Mass (LBM) {{ dataInfo.result.lbm }} kg</p>
-            <p>Fat Body Mass {{ dataInfo.result.lbmFat }} kg</p>
-            <p>Perfect weight: {{ dataInfo.result.perfWeight }} kg</p>
+            <p class="text-left">Lean Body Mass (LBM) {{ dataInfo.result.lbm }} kg</p>
+            <p class="text-left">Fat Body Mass {{ dataInfo.result.lbmFat }} kg</p>
+            <p class="text-left">Perfect weight: {{ dataInfo.result.perfWeight }} kg</p>
           </v-card>
         </v-col>
       </v-row>
@@ -92,7 +92,9 @@
       <v-btn
         color="primary"
         :disabled="!dataInfo.result.bmr"
-        @click="updatePage(3), setBasicInfo(dataInfo), calculateMacro(dataInfo.macro)"
+        @click="
+          updatePage(3), setBasicInfo(dataInfo), calculateMacro(dataInfo.macro)
+        "
         >Next step</v-btn
       >
     </v-container>
@@ -100,46 +102,46 @@
 </template>
 
 <script>
-import text from '../data/text.json';
+import text from "../data/text.json";
 export default {
-  name: 'BasicInfo',
+  name: "BasicInfo",
   data() {
     return {
-      text,
+      text
     };
   },
   computed: {
     dataInfo() {
       return this.$store.state.data;
-    },
+    }
   },
   methods: {
     updatePage(value) {
-      this.$store.commit('updatePage', value);
+      this.$store.commit("updatePage", value);
     },
     calculateMacro(value) {
-      this.$store.dispatch('calculateMacro', value);
+      this.$store.dispatch("calculateMacro", value);
     },
-    setBasicInfo(value){
-      this.$store.dispatch('setBasicInfo', value);
+    setBasicInfo(value) {
+      this.$store.dispatch("setBasicInfo", value);
     },
     calculateData(value) {
       if (Object.values(value).includes(null)) {
         return;
       } else {
         value.gendDiff = this.text.formula[value.formula][value.gender];
-        this.$store.dispatch('calculateBMR', value);
-        this.$store.dispatch('calculateTDEE', value);
-        this.$store.dispatch('calculateBMI', value);
-        this.$store.dispatch('calculatePerfWeight', value);
+        this.$store.dispatch("calculateBMR", value);
+        this.$store.dispatch("calculateTDEE", value);
+        this.$store.dispatch("calculateBMI", value);
+        this.$store.dispatch("calculatePerfWeight", value);
         if (value.bodyfat) {
-          this.$store.dispatch('calculateLBM', value);
-          this.$store.dispatch('calculateBMR', value);
-          this.$store.dispatch('calculateTDEE', value);
-          this.$store.dispatch('calculatePerfWeight', value);
+          this.$store.dispatch("calculateLBM", value);
+          this.$store.dispatch("calculateBMR", value);
+          this.$store.dispatch("calculateTDEE", value);
+          this.$store.dispatch("calculatePerfWeight", value);
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>

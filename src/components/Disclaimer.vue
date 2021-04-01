@@ -74,11 +74,11 @@
 
 <script>
 export default {
-  name: 'Disclaimer',
+  name: "Disclaimer",
   methods: {
     updatePage(value) {
-      this.$store.commit('updatePage', value);
-    },
+      this.$store.commit("updatePage", value);
+    }
   },
   computed: {
     checkbox: {
@@ -86,10 +86,10 @@ export default {
         return this.$store.state.disclaimerCheck;
       },
       set(value) {
-        this.$store.commit('updateDisclaimerCheckbox', value);
-      },
-    },
-  },
+        this.$store.commit("updateDisclaimerCheckbox", value);
+      }
+    }
+  }
 };
 </script>
 

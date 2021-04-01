@@ -26,7 +26,7 @@ export default new Vuex.Store({
         lbmFat: null,
         bmi: null,
         perfWeight: null,
-        bmiText: null,
+        bmiText: null
       },
       macro: {
         dpc: 7,
@@ -34,13 +34,13 @@ export default new Vuex.Store({
         workoutKcal: null,
         restKcal: null,
         restPercent: -20,
-        workoutPercent: 20,
+        workoutPercent: 20
       },
       summary: {
         cycleTee: null,
         cycleKcal: null,
         cycleOU: null,
-        cycleChangeKG: null,
+        cycleChangeKG: null
       },
       tableItems: [
         {
@@ -49,11 +49,11 @@ export default new Vuex.Store({
           days: 0,
           weight: null,
           change: null,
-          total: null,
-        },
-      ],
-    },
+          total: null
+        }
+      ]
+    }
   },
   mutations,
-  actions,
+  actions
 });
