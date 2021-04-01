@@ -17,19 +17,19 @@
 
         <v-stepper-items height="400px">
           <v-stepper-content step="1">
-            <slot name="Disclaimer"></slot>
+            <slot name="disclaimer"></slot>
           </v-stepper-content>
 
           <v-stepper-content step="2">
-            <slot name="BasicInfo"></slot>
+            <slot name="basicinfo"></slot>
           </v-stepper-content>
 
           <v-stepper-content step="3">
-            <slot name="MacroCalc"></slot>
+            <slot name="macrocalc"></slot>
           </v-stepper-content>
 
           <v-stepper-content step="4">
-            <slot name="Goals"></slot>
+            <slot name="goals"></slot>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -37,25 +37,13 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import BasicInfo from "@/components/BasicInfo.vue";
-import Disclaimer from "@/components/Disclaimer.vue";
-import Goals from "@/components/Goals.vue";
-import MacroCalc from "@/components/MacroCalc.vue";
-import Vue from "vue";
-import Component from "vue-class-component";
-
-@Component({
-  components: {
-    Disclaimer,
-    BasicInfo,
-    MacroCalc,
-    Goals
+<script>
+export default {
+  name: "Skeleton",
+  computed: {
+    page() {
+      return this.$store.state.utils.page;
+    }
   }
-})
-export default class Skeleton extends Vue {
-  get page() {
-    return this.$store.state.utils.page;
-  }
-}
+};
 </script>

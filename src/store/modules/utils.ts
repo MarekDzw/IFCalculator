@@ -1,5 +1,5 @@
 import text from "@/data/text.json";
-import { BasicInfo } from "@/store/types";
+import { BasicInfo, TableItems } from "@/store/types";
 
 export function calculateBMI(weight: number, height: number): number {
   return Math.floor(weight / ((height / 100) * (height / 100)));
@@ -46,10 +46,7 @@ export function calculateBMR(lbm: number, data: BasicInfo): number {
   let value: number = 0;
   if (data.formula === "mifflin") {
     value =
-      10 * (data.weight ? data.weight : 0) +
-      6.25 * (data.height ? data.height : 0) -
-      5 * (data.age ? data.age : 0) +
-      (data.gendDiff ? data.gendDiff : 0);
+      10 * data.weight + 6.25 * data.height - 5 * data.age + data.gendDiff;
   }
   if (data.formula === "katch") {
     value = Math.round(370 + 21.6 * lbm);
@@ -57,17 +54,17 @@ export function calculateBMR(lbm: number, data: BasicInfo): number {
   if (data.formula === "harris") {
     if (data.gender === "male") {
       value = Math.floor(
-        13.397 * (data.weight ? data.weight : 0) +
-          4.799 * (data.height ? data.height : 0) -
-          5.677 * (data.age ? data.age : 0) +
-          (data.gendDiff ? data.gendDiff : 0)
+        13.397 * data.weight +
+          4.799 * data.height -
+          5.677 * data.age +
+          data.gendDiff
       );
     } else {
       value = Math.floor(
-        9.247 * (data.weight ? data.weight : 0) +
-          3.098 * (data.height ? data.height : 0) -
-          4.33 * (data.age ? data.age : 0) +
-          (data.gendDiff ? data.gendDiff : 0)
+        9.247 * data.weight +
+          3.098 * data.height -
+          4.33 * data.age +
+          data.gendDiff
       );
     }
   }
@@ -80,7 +77,7 @@ export function addDays(date: string, days: number): string {
 }
 export function fillData(value: any) {
   let i = 0;
-  let items = [];
+  let items: TableItems[] = [];
   let { goal, cycleChangeKG, date } = value.summary;
   let { weight } = value.basic;
   let change;
@@ -91,7 +88,7 @@ export function fillData(value: any) {
     days: 0,
     weight: weight,
     change: 0,
-    total: 0
+    total: 0,
   };
   i++;
   items.push(item);
@@ -102,7 +99,7 @@ export function fillData(value: any) {
       days: items[i - 1].days + value.macro.dpc,
       weight: toFixedNumber(items[i - 1].weight + cycleChangeKG, 2),
       change: cycleChangeKG,
-      total: toFixedNumber(items[i - 1].total + cycleChangeKG, 2)
+      total: toFixedNumber(items[i - 1].total + cycleChangeKG, 2),
     };
     goal += change;
     i++;

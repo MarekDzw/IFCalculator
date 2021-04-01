@@ -120,32 +120,29 @@
 <script lang="ts">
 import { ActionsTypes } from "@/store/modules/actions-types";
 import { MutationsTypes } from "@/store/modules/mutations-types";
-import Vue from "vue";
-import Component from "vue-class-component";
 
-@Component({})
-export default class MacroCalc extends Vue {
-  textTDEE: string = "% Under/Over TDEE";
-
-  get macroInfo() {
-    return this.$store.state.macro;
+export default {
+  name: "MacroCalc",
+  data() {
+    return {
+      textTDEE: "% Under/Over TDEE"
+    };
+  },
+  computed: {
+    macroInfo() {
+      return this.$store.state.macro;
+    },
+    summaryInfo() {
+      return this.$store.state.summary;
+    }
+  },
+  methods: {
+    updatePage(value) {
+      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
+    },
+    calculateMacro(value) {
+      this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
+    }
   }
-
-  get summaryInfo() {
-    return this.$store.state.summary;
-  }
-
-  updatePage(value: number) {
-    this.$gtag.event("updated-macro", {
-      event_category: "updated-macro-page",
-      event_label: "Updated macro page",
-      value: 1
-    });
-    this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
-  }
-
-  calculateMacro(value: any) {
-    this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
-  }
-}
+};
 </script>

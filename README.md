@@ -4,7 +4,9 @@
 
 Rewritten old Intermittent Fasting Calculator to run on modern web browsers.
 
-Lot of improvements can be done here.
-Stable typechecked version, done in 5 days sprint with a goal just to make it work.
+### TODO
 
-
+- [ ] Goals
+  - [ ] Add goal set
+    - [ ] Set total weight loss in kg
+    - [ ] Display grid

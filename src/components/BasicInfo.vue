@@ -123,52 +123,47 @@
 </template>
 
 <script lang="ts">
-import text from '../data/text.json';
-import { MutationsTypes } from '@/store/modules/mutations-types';
-import { ActionsTypes } from '@/store/modules/actions-types';
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import text from "../data/text.json";
+import Vue from "vue/types/umd";
+import { MutationsTypes } from "@/store/modules/mutations-types";
+import { ActionsTypes } from "@/store/modules/actions-types";
+import { BasicInfo, Calcs, Macro } from "@/store/types";
 
-@Component({})
-export default class BasicInfo extends Vue {
-  //Add typeas for text, object not passing
-  text: any = text;
-
-  get basicInfo() {
-    return this.$store.state.basic;
-  }
-
-  get calcsInfo() {
-    return this.$store.state.calcs;
-  }
-
-  get macroInfo() {
-    return this.$store.state.macro;
-  }
-
-  updatePage(value: number) {
-    this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
-  }
-
-  calculateMacro(value: any, tdee: number) {
-    this.$gtag.event('calculate-macro', {
-      event_category: 'calculated-macro-on-basic-page',
-      event_label: 'Calculated macro on basic page',
-      value: 1,
-    });
-    value.tdee = tdee;
-    this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
-  }
-
-  setBasicInfo(value: any) {
-    this.$store.dispatch(ActionsTypes.SET_BASICINFO, value);
-  }
-
-  calculateData(value: any) {
-    if (value.gender) {
-      value.gendDiff = this.text.formula[value.formula][value.gender];
+export default Vue.extend({
+  name: "BasicInfo",
+  data() {
+    return {
+      text
+    };
+  },
+  computed: {
+    basicInfo(): BasicInfo {
+      return this.$store.state.basic;
+    },
+    calcsInfo(): Calcs {
+      return this.$store.state.calcs;
+    },
+    macroInfo(): Macro {
+      return this.$store.state.macro;
     }
-    this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
+  },
+  methods: {
+    updatePage(value: number) {
+      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
+    },
+    calculateMacro(value, tdee: number) {
+      value.tdee = tdee;
+      this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
+    },
+    setBasicInfo(value) {
+      this.$store.dispatch(ActionsTypes.SET_BASICINFO, value);
+    },
+    calculateData(value) {
+      if (value.gender) {
+        value.gendDiff = this.text.formula[value.formula][value.gender];
+      }
+      this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
+    }
   }
-}
+});
 </script>
