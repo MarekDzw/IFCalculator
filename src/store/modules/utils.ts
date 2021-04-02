@@ -3,8 +3,8 @@ import text from "@/data/text.json";
 export function calculateBMI(data) {
   return Math.floor(data.weight / ((data.height / 100) * (data.height / 100)));
 }
-export function calculateTDEE(data) {
-  return Math.floor(data.activity * this.state.calcs.bmr);
+export function calculateTDEE(x, data) {
+  return Math.floor(data.activity * x.state.calcs.bmr);
 }
 
 export function checkBMI(value: any) {
@@ -18,14 +18,14 @@ export function checkBMI(value: any) {
 export function calculatePerfWeight(data) {
   return 2.2 * 22 + 3.5 * 22 * (data - 1.5);
 }
-export function calculateBMR(data) {
+export function calculateBMR(x, data) {
   if (data.formula === "mifflin") {
     let value =
       10 * data.weight + 6.25 * data.height - 5 * data.age + data.gendDiff;
     return value;
   }
   if (data.formula === "katch") {
-    let value = Math.round(370 + 21.6 * this.state.calcs.lbm);
+    let value = Math.round(370 + 21.6 * x.state.calcs.lbm);
     return value;
   }
   if (data.formula === "harris") {

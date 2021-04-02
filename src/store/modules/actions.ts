@@ -21,25 +21,27 @@ export interface Actions {
 
 export const actions: ActionTree<State, State> & Actions = {
   [ActionsTypes.CACLULATE_BMR]({ commit }, data) {
-    let bmr: number = calculateBMR(data);
+    console.log("actions: ", data);
+    let bmr: number = calculateBMR(this, data);
+    let bmi: number = calculateBMI(data);
+    let bmiText = checkBMI(bmi);
     let lbmFat = (data.weight * data.bodyfat) / 100;
     let lbm = data.weight - lbmFat;
     let value1 = {
       lbm: lbm,
       lbmFat: lbmFat,
     };
-    let bmi = calculateBMI(data);
-    let bmiText = checkBMI(bmi);
+
     let value2 = {
       bmi: bmi,
       bmiText: bmiText,
     };
-    let value3 = calculateTDEE(data);
+    let value3: number = calculateTDEE(this, data);
     let height = this.state.basic.height / 100;
     let value4 = calculatePerfWeight(height);
+    commit(MutationsTypes.UPDATE_BMR, bmr);
     commit(MutationsTypes.UPDATE_PERFWEIGHT, value4);
     commit(MutationsTypes.UPDATE_TDEE, value3);
-    commit(MutationsTypes.UPDATE_BMR, bmr);
     commit(MutationsTypes.UPDATE_LBM, value1);
     commit(MutationsTypes.UPDATE_BMI, value2);
   },

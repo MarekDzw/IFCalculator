@@ -23,7 +23,6 @@ export const mutations: MutationTree<State> & Mutations = {
     state.utils.page = payload;
   },
   [MutationsTypes.UPDATE_BMR](state, payload) {
-    console.log(payload);
     state.calcs.bmr = payload.toFixed(0);
   },
   [MutationsTypes.UPDATE_LBM](state, payload) {

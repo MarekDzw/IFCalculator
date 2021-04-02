@@ -137,6 +137,7 @@ export default {
       this.$store.dispatch(ActionsTypes.SET_BASICINFO, value);
     },
     calculateData(value) {
+      console.log("component: ", value);
       if (value.gender) {
         value.gendDiff = this.text.formula[value.formula][value.gender];
       }
