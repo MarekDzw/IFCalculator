@@ -6,13 +6,13 @@
           <v-card class="pa-2">
             <v-card-title class="text-center">Schedule:</v-card-title>
             <v-text-field
-              v-model="dataInfo.macro.dpc"
+              v-model.number="dataInfo.macro.dpc"
               label="Days per cycle"
               type="number"
               @change="calculateMacro(dataInfo)"
             />
             <v-text-field
-              v-model="dataInfo.macro.wpc"
+              v-model.number="dataInfo.macro.wpc"
               label="Workouts per cycle"
               type="number"
               @change="calculateMacro(dataInfo)"
@@ -24,10 +24,10 @@
           <v-card class="pa-2">
             <v-card-title class="text-lg-center">Summary:</v-card-title>
             <v-card-text class="text-left"
-              >Cycle TEE:{{ dataInfo.summary.cycleTee }} kcal
+              >Cycle TEE: {{ dataInfo.summary.cycleTee }} kcal
             </v-card-text>
             <v-card-text class="text-left"
-              >TDEE: {{ dataInfo.result.tdee }} kcal</v-card-text
+              >TDEE: {{ dataInfo.calcs.tdee }} kcal</v-card-text
             >
             <v-card-text class="text-left"
               >Cycle Calories: {{ dataInfo.summary.cycleKcal }} kcal
@@ -52,7 +52,7 @@
           <v-row>
             <v-col cols="3" md="6">
               <v-text-field
-                v-model="dataInfo.macro.restPercent"
+                v-model.number="dataInfo.macro.restPercent"
                 :suffix="textTDEE"
                 cols="1"
                 solo
@@ -62,7 +62,7 @@
             </v-col>
             <v-col cols="3" md="6">
               <v-text-field
-                :hint="dataInfo.macro.restKcal - dataInfo.result.tdee + ' kcal'"
+                :hint="dataInfo.macro.restKcal - dataInfo.calcs.tdee + ' kcal'"
                 :value="dataInfo.macro.restKcal"
                 disabled
                 persistent-hint
@@ -78,7 +78,7 @@
           <v-row>
             <v-col cols="3" md="6">
               <v-text-field
-                v-model="dataInfo.macro.workoutPercent"
+                v-model.number="dataInfo.macro.workoutPercent"
                 :suffix="textTDEE"
                 cols="1"
                 solo
@@ -88,7 +88,7 @@
             <v-col cols="3" md="6">
               <v-text-field
                 :hint="
-                  dataInfo.macro.workoutKcal - dataInfo.result.tdee + ' kcal'
+                  dataInfo.macro.workoutKcal - dataInfo.calcs.tdee + ' kcal'
                 "
                 :value="dataInfo.macro.workoutKcal"
                 disabled

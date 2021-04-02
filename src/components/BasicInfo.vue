@@ -54,7 +54,7 @@
         <v-col cols="6" md="8">
           <v-card class="pa-2" outlined tile>
             <p class="text-left">
-              Basal Metabolic Rate (BMR) {{ resultInfo.bmr }} kcal
+              Basal Metabolic Rate (BMR) {{ calcsInfo.bmr }} kcal
             </p>
             <v-radio-group
               @change="calculateData(basicInfo)"
@@ -75,20 +75,18 @@
           <v-card class="pa-2" outlined tile>
             <p class="text-left">
               Total Daily Energy Expenditure (TDEE)
-              {{ resultInfo.tdee }} kcal
+              {{ calcsInfo.tdee }} kcal
             </p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Body Mass Index (BMI) {{ resultInfo.bmi }}</p>
-            <p class="text-left">{{ resultInfo.bmiText }}</p>
+            <p class="text-left">Body Mass Index (BMI) {{ calcsInfo.bmi }}</p>
+            <p class="text-left">{{ calcsInfo.bmiText }}</p>
           </v-card>
           <v-card class="pa-2" outlined tile>
+            <p class="text-left">Lean Body Mass (LBM) {{ calcsInfo.lbm }} kg</p>
+            <p class="text-left">Fat Body Mass {{ calcsInfo.lbmFat }} kg</p>
             <p class="text-left">
-              Lean Body Mass (LBM) {{ resultInfo.lbm }} kg
-            </p>
-            <p class="text-left">Fat Body Mass {{ resultInfo.lbmFat }} kg</p>
-            <p class="text-left">
-              Perfect weight: {{ resultInfo.perfWeight }} kg
+              Perfect weight: {{ calcsInfo.perfWeight }} kg
             </p>
           </v-card>
         </v-col>
@@ -124,8 +122,8 @@ export default {
     basicInfo() {
       return this.$store.state.basic;
     },
-    resultInfo() {
-      return this.$store.state.result;
+    calcsInfo() {
+      return this.$store.state.calcs;
     }
   },
   methods: {
@@ -139,16 +137,13 @@ export default {
       this.$store.dispatch(ActionsTypes.SET_BASICINFO, value);
     },
     calculateData(value) {
-      value.gendDiff = this.text.formula[value.formula][value.gender];
+      if (value.gender) {
+        value.gendDiff = this.text.formula[value.formula][value.gender];
+      }
       this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
-      this.$store.dispatch(ActionsTypes.CACLULATE_TDEE, value);
-      this.$store.dispatch(ActionsTypes.CACLULATE_BMI, value);
-      this.$store.dispatch(ActionsTypes.CACLULATE_PERFWEIGHT, value);
       if (value.bodyfat) {
         this.$store.dispatch(ActionsTypes.CACLULATE_LBM, value);
         this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
-        this.$store.dispatch(ActionsTypes.CACLULATE_TDEE, value);
-        this.$store.dispatch(ActionsTypes.CACLULATE_PERFWEIGHT, value);
       }
     }
   }

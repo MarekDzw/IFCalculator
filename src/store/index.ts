@@ -17,16 +17,10 @@ const store: StoreOptions<State> = {
     basic: {
       formula: "mifflin",
     },
-    result: {
-      bmr: 0,
-      tdee: 0,
-      lbm: 0,
-      lbmFat: 0,
-      bmi: 0,
-      perfWeight: 0,
-      bmiText: "",
-    },
+    calcs: {},
     macro: {
+      dpc: 7,
+      wpc: 2,
       restPercent: -20,
       workoutPercent: 20,
     },

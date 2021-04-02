@@ -2,7 +2,7 @@
 export interface State {
   utils: Utils;
   basic: BasicInfo;
-  result: Result;
+  calcs?: Calcs;
   macro: Macro;
   summary: Summary;
   tableItems?: TableItems[];
@@ -20,10 +20,10 @@ export interface BasicInfo {
   activity?: number;
   gender?: string;
   bodyfat?: number;
-  formula: string;
   gendDiff?: number;
+  formula: string;
 }
-export interface Result {
+export interface Calcs {
   bmr?: number;
   tdee?: number;
   lbm?: number;
@@ -33,8 +33,8 @@ export interface Result {
   bmiText?: string;
 }
 export interface Macro {
-  dpc?: number;
-  wpc?: number;
+  dpc: number;
+  wpc: number;
   workoutKcal?: number;
   restKcal?: number;
   restPercent: number;

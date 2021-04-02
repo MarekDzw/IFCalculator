@@ -7,7 +7,6 @@ export type Mutations = {
   [MutationsTypes.UPDATE_PAGE](state: State, payload: number): void;
   [MutationsTypes.UPDATE_BMR](state: State, payload): void;
   [MutationsTypes.UPDATE_LBM](state: State, payload): void;
-  [MutationsTypes.UPDATE_LBMFAT](state: State, payload): void;
   [MutationsTypes.UPDATE_BMI](state: State, payload): void;
   [MutationsTypes.UPDATE_MACRO](state: State, payload): void;
   [MutationsTypes.UPDATE_SUMMARY](state: State, payload): void;
@@ -24,21 +23,19 @@ export const mutations: MutationTree<State> & Mutations = {
     state.utils.page = payload;
   },
   [MutationsTypes.UPDATE_BMR](state, payload) {
-    state.result.bmr = payload.toFixed(0);
+    console.log(payload);
+    state.calcs.bmr = payload.toFixed(0);
   },
   [MutationsTypes.UPDATE_LBM](state, payload) {
-    state.result.lbm = payload.lbm.toFixed(2);
-    state.result.lbmFat = payload.lbmFat;
-  },
-  [MutationsTypes.UPDATE_LBMFAT](state, payload) {
-    state.result.lbmFat = payload;
+    state.calcs.lbm = payload.lbm.toFixed(2);
+    state.calcs.lbmFat = payload.lbmFat;
   },
   [MutationsTypes.UPDATE_TDEE](state, payload) {
-    state.result.tdee = payload;
+    state.calcs.tdee = payload;
   },
   [MutationsTypes.UPDATE_BMI](state, payload) {
-    state.result.bmiText = payload.bmiText;
-    state.result.bmi = payload.bmi;
+    state.calcs.bmiText = payload.bmiText;
+    state.calcs.bmi = payload.bmi;
   },
   [MutationsTypes.UPDATE_MACRO](state, payload) {
     state.macro.restPercent = payload.restPercent;
@@ -53,7 +50,7 @@ export const mutations: MutationTree<State> & Mutations = {
     state.summary.cycleChangeKG = payload.cycleChangeKG.toFixed(2);
   },
   [MutationsTypes.UPDATE_PERFWEIGHT](state, payload) {
-    state.result.perfWeight = payload.toFixed(2);
+    state.calcs.perfWeight = payload.toFixed(2);
   },
   [MutationsTypes.UPDATE_DATE](state, payload) {
     state.tableItems[0].date = payload;

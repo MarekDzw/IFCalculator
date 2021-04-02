@@ -1,10 +1,50 @@
 import text from "@/data/text.json";
 
+export function calculateBMI(data) {
+  return Math.floor(data.weight / ((data.height / 100) * (data.height / 100)));
+}
+export function calculateTDEE(data) {
+  return Math.floor(data.activity * this.state.calcs.bmr);
+}
+
 export function checkBMI(value: any) {
   let array = text.bmiIndicator;
   for (let i = 0; i < array.length; i++) {
     if (array[i].min < value && array[i].max > value) {
       return array[i].text;
+    }
+  }
+}
+export function calculatePerfWeight(data) {
+  return 2.2 * 22 + 3.5 * 22 * (data - 1.5);
+}
+export function calculateBMR(data) {
+  if (data.formula === "mifflin") {
+    let value =
+      10 * data.weight + 6.25 * data.height - 5 * data.age + data.gendDiff;
+    return value;
+  }
+  if (data.formula === "katch") {
+    let value = Math.round(370 + 21.6 * this.state.calcs.lbm);
+    return value;
+  }
+  if (data.formula === "harris") {
+    if (data.gender === "male") {
+      let value = Math.floor(
+        13.397 * data.weight +
+          4.799 * data.height -
+          5.677 * data.age +
+          data.gendDiff
+      );
+      return value;
+    } else {
+      let value = Math.floor(
+        9.247 * data.weight +
+          3.098 * data.height -
+          4.33 * data.age +
+          data.gendDiff
+      );
+      return value;
     }
   }
 }
