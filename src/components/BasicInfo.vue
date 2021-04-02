@@ -7,55 +7,58 @@
             <v-card-title>Your information</v-card-title>
             <v-text-field
               type="number"
-              v-model="dataInfo.height"
+              v-model.number="basicInfo.height"
               label="Height"
-              @change="calculateData(dataInfo)"
+              @change="calculateData(basicInfo)"
               suffix="cm"
             ></v-text-field>
             <v-text-field
               type="number"
-              v-model="dataInfo.weight"
+              v-model.number="basicInfo.weight"
               label="Weight"
-              @change="calculateData(dataInfo)"
+              @change="calculateData(basicInfo)"
               suffix="kg"
             ></v-text-field>
             <v-text-field
               type="number"
-              v-model="dataInfo.age"
+              v-model.number="basicInfo.age"
               label="Age"
-              @change="calculateData(dataInfo)"
+              @change="calculateData(basicInfo)"
             ></v-text-field>
             <v-select
               :items="text.activity"
               label="Activity"
               item-text="name"
-              v-model="dataInfo.activity"
-              @change="calculateData(dataInfo)"
+              v-model.number="basicInfo.activity"
+              @change="calculateData(basicInfo)"
               value="value"
             ></v-select>
             <v-select
+              class="text-left"
               :items="text.gender"
               label="Gender"
               item-text="name"
               value="value"
-              @change="calculateData(dataInfo)"
-              v-model="dataInfo.gender"
+              @change="calculateData(basicInfo)"
+              v-model="basicInfo.gender"
             ></v-select>
             <v-text-field
               type="number"
-              v-model="dataInfo.bodyfat"
+              v-model.number="basicInfo.bodyfat"
               label="Bodyfat(optional)"
-              @change="calculateData(dataInfo)"
+              @change="calculateData(basicInfo)"
               suffix="%"
             ></v-text-field>
           </v-card>
         </v-col>
         <v-col cols="6" md="8">
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Basal Metabolic Rate (BMR) {{ dataInfo.result.bmr }} kcal</p>
+            <p class="text-left">
+              Basal Metabolic Rate (BMR) {{ resultInfo.bmr }} kcal
+            </p>
             <v-radio-group
-              @change="calculateData(dataInfo)"
-              v-model="dataInfo.formula"
+              @change="calculateData(basicInfo)"
+              v-model="basicInfo.formula"
             >
               <v-radio
                 value="mifflin"
@@ -65,24 +68,28 @@
               <v-radio
                 value="katch"
                 label="Katch-McArdle Formula"
-                :disabled="!dataInfo.bodyfat"
+                :disabled="!basicInfo.bodyfat"
               ></v-radio>
             </v-radio-group>
           </v-card>
           <v-card class="pa-2" outlined tile>
             <p class="text-left">
               Total Daily Energy Expenditure (TDEE)
-              {{ dataInfo.result.tdee }} kcal
+              {{ resultInfo.tdee }} kcal
             </p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Body Mass Index (BMI) {{ dataInfo.result.bmi }}</p>
-            <p class="text-left">{{ dataInfo.result.bmiText }}</p>
+            <p class="text-left">Body Mass Index (BMI) {{ resultInfo.bmi }}</p>
+            <p class="text-left">{{ resultInfo.bmiText }}</p>
           </v-card>
           <v-card class="pa-2" outlined tile>
-            <p class="text-left">Lean Body Mass (LBM) {{ dataInfo.result.lbm }} kg</p>
-            <p class="text-left">Fat Body Mass {{ dataInfo.result.lbmFat }} kg</p>
-            <p class="text-left">Perfect weight: {{ dataInfo.result.perfWeight}} kg</p>
+            <p class="text-left">
+              Lean Body Mass (LBM) {{ resultInfo.lbm }} kg
+            </p>
+            <p class="text-left">Fat Body Mass {{ resultInfo.lbmFat }} kg</p>
+            <p class="text-left">
+              Perfect weight: {{ resultInfo.perfWeight }} kg
+            </p>
           </v-card>
         </v-col>
       </v-row>
@@ -91,9 +98,9 @@
     <v-container class="d-flex justify-center">
       <v-btn
         color="primary"
-        :disabled="!dataInfo"
+        :disabled="!basicInfo"
         @click="
-          updatePage(3), setBasicInfo(dataInfo), calculateMacro(dataInfo)
+          updatePage(3), setBasicInfo(basicInfo), calculateMacro(basicInfo)
         "
         >Next step</v-btn
       >
@@ -103,6 +110,9 @@
 
 <script>
 import text from "../data/text.json";
+import { MutationsTypes } from "@/store/modules/mutations-types";
+import { ActionsTypes } from "@/store/modules/actions-types";
+
 export default {
   name: "BasicInfo",
   data() {
@@ -111,35 +121,34 @@ export default {
     };
   },
   computed: {
-    dataInfo() {
-      return this.$store.state;
+    basicInfo() {
+      return this.$store.state.basic;
+    },
+    resultInfo() {
+      return this.$store.state.result;
     }
   },
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
+      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
     calculateMacro(value) {
-      this.$store.dispatch("calculateMacro", value);
+      this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
     },
     setBasicInfo(value) {
-      this.$store.dispatch("setBasicInfo", value);
+      this.$store.dispatch(ActionsTypes.SET_BASICINFO, value);
     },
     calculateData(value) {
-      if (Object.values(value).includes(null)) {
-        return;
-      } else {
-        value.gendDiff = this.text.formula[value.formula][value.gender];
-        this.$store.dispatch("calculateBMR", value);
-        this.$store.dispatch("calculateTDEE", value);
-        this.$store.dispatch("calculateBMI", value);
-        this.$store.dispatch("calculatePerfWeight", value);
-        if (value.bodyfat) {
-          this.$store.dispatch("calculateLBM", value);
-          this.$store.dispatch("calculateBMR", value);
-          this.$store.dispatch("calculateTDEE", value);
-          this.$store.dispatch("calculatePerfWeight", value);
-        }
+      value.gendDiff = this.text.formula[value.formula][value.gender];
+      this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
+      this.$store.dispatch(ActionsTypes.CACLULATE_TDEE, value);
+      this.$store.dispatch(ActionsTypes.CACLULATE_BMI, value);
+      this.$store.dispatch(ActionsTypes.CACLULATE_PERFWEIGHT, value);
+      if (value.bodyfat) {
+        this.$store.dispatch(ActionsTypes.CACLULATE_LBM, value);
+        this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
+        this.$store.dispatch(ActionsTypes.CACLULATE_TDEE, value);
+        this.$store.dispatch(ActionsTypes.CACLULATE_PERFWEIGHT, value);
       }
     }
   }

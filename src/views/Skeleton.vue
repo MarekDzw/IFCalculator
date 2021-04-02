@@ -42,7 +42,7 @@ export default {
   name: "Skeleton",
   computed: {
     page() {
-      return this.$store.state.page;
+      return this.$store.state.utils.page;
     }
   }
 };

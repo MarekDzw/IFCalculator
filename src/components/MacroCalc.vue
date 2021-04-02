@@ -6,13 +6,13 @@
           <v-card class="pa-2">
             <v-card-title class="text-center">Schedule:</v-card-title>
             <v-text-field
-              v-model="dataInfo"
+              v-model="dataInfo.macro.dpc"
               label="Days per cycle"
               type="number"
               @change="calculateMacro(dataInfo)"
             />
             <v-text-field
-              v-model="dataInfo"
+              v-model="dataInfo.macro.wpc"
               label="Workouts per cycle"
               type="number"
               @change="calculateMacro(dataInfo)"
@@ -23,15 +23,17 @@
         <v-col cols="6" md="4">
           <v-card class="pa-2">
             <v-card-title class="text-lg-center">Summary:</v-card-title>
-            <v-card-text
-              >Cycle TEE:{{ dataInfo}} kcal
+            <v-card-text class="text-left"
+              >Cycle TEE:{{ dataInfo.summary.cycleTee }} kcal
             </v-card-text>
-            <v-card-text>TDEE: {{ dataInfo }} kcal</v-card-text>
-            <v-card-text
-              >Cycle Calories: {{ dataInfo }} kcal
+            <v-card-text class="text-left"
+              >TDEE: {{ dataInfo.result.tdee }} kcal</v-card-text
+            >
+            <v-card-text class="text-left"
+              >Cycle Calories: {{ dataInfo.summary.cycleKcal }} kcal
             </v-card-text>
-            <v-card-text
-              >Cycle Over/Under: {{ dataInfo}} kcal
+            <v-card-text class="text-left"
+              >Cycle Over/Under: {{ dataInfo.summary.cycleOU }} kcal
             </v-card-text>
           </v-card>
         </v-col>
@@ -39,18 +41,18 @@
           <v-card class="pa-2">
             <v-card-title>Cycle change in kg:</v-card-title>
             <v-card-text class="title text-lg-center">
-              {{ dataInfo}} kg
+              {{ dataInfo.summary.cycleChangeKG }} kg
             </v-card-text>
           </v-card>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="text-left">
           Rest
           <v-row>
             <v-col cols="3" md="6">
               <v-text-field
-                v-model="dataInfo"
+                v-model="dataInfo.macro.restPercent"
                 :suffix="textTDEE"
                 cols="1"
                 solo
@@ -60,8 +62,8 @@
             </v-col>
             <v-col cols="3" md="6">
               <v-text-field
-                :hint="dataInfo - dataInfo + ' kcal'"
-                :value="dataInfo"
+                :hint="dataInfo.macro.restKcal - dataInfo.result.tdee + ' kcal'"
+                :value="dataInfo.macro.restKcal"
                 disabled
                 persistent-hint
                 solo
@@ -70,26 +72,25 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="text-left">
           Workout
 
           <v-row>
             <v-col cols="3" md="6">
               <v-text-field
-                v-model="dataInfo"
+                v-model="dataInfo.macro.workoutPercent"
                 :suffix="textTDEE"
                 cols="1"
                 solo
-                type="number"
-                @change="calculateMacro(dataInfo)"
+                @change="calculateMacro(dataInfo.macro)"
               />
             </v-col>
             <v-col cols="3" md="6">
               <v-text-field
                 :hint="
-                  dataInfo- dataInfo + ' kcal'
+                  dataInfo.macro.workoutKcal - dataInfo.result.tdee + ' kcal'
                 "
-                :value="dataInfo"
+                :value="dataInfo.macro.workoutKcal"
                 disabled
                 persistent-hint
                 solo
@@ -114,6 +115,9 @@
 </template>
 
 <script>
+import { ActionsTypes } from "@/store/modules/actions-types";
+import { MutationsTypes } from "@/store/modules/mutations-types";
+
 export default {
   name: "MacroCalc",
   data() {
@@ -124,15 +128,15 @@ export default {
 
   computed: {
     dataInfo() {
-      return this.$store.state.data;
+      return this.$store.state;
     }
   },
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
+      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
     calculateMacro(value) {
-      this.$store.dispatch("calculateMacro", value);
+      this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
     }
   }
 };

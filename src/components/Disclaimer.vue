@@ -73,22 +73,22 @@
 </template>
 
 <script lang="ts">
-
+import { MutationsTypes } from "@/store/modules/mutations-types";
 
 export default {
   name: "Disclaimer",
   methods: {
-    updatePage(value: number) {
-      this.$store.commit("updatePage", value);
+    updatePage(value: number): number {
+      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     }
   },
   computed: {
     checkbox: {
       get(): boolean {
-        return this.$store.state.disclaimerCheck;
+        return this.$store.state.utils.disclaimerCheck;
       },
-      set(value: boolean) {
-        this.$store.commit("updateDisclaimer", value);
+      set(value: boolean): boolean {
+        this.$store.commit(MutationsTypes.UPDATE_DISCLAIMER, value);
       }
     }
   }

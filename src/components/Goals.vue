@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { ActionsTypes } from "@/store/modules/actions-types";
+import { MutationsTypes } from "@/store/modules/mutations-types";
 import text from "../data/text.json";
 export default {
   name: "Goals",
@@ -78,18 +80,18 @@ export default {
       return this.$store.state;
     },
     goalInfo() {
-      return this.$store.state.data
+      return this.$store.state.data;
     }
   },
   methods: {
     updatePage(value) {
-      this.$store.commit("updatePage", value);
+      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
     setNewDate(value) {
-      this.$store.dispatch("setNewDate", value);
+      this.$store.dispatch(ActionsTypes.SET_NEWDATE, value);
     },
     calculateGoal(value) {
-      this.$store.dispatch("calculateGoal", value);
+      this.$store.dispatch(ActionsTypes.CACLULATE_GOAL, value);
     }
   }
 };
