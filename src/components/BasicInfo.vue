@@ -10,6 +10,7 @@
               v-model.number="basicInfo.height"
               label="Height"
               @change="calculateData(basicInfo)"
+              @input="calculateData(basicInfo)"
               suffix="cm"
             ></v-text-field>
             <v-text-field
@@ -17,6 +18,7 @@
               v-model.number="basicInfo.weight"
               label="Weight"
               @change="calculateData(basicInfo)"
+              @input="calculateData(basicInfo)"
               suffix="kg"
             ></v-text-field>
             <v-text-field
@@ -24,6 +26,7 @@
               v-model.number="basicInfo.age"
               label="Age"
               @change="calculateData(basicInfo)"
+              @input="calculateData(basicInfo)"
             ></v-text-field>
             <v-select
               :items="text.activity"
@@ -47,15 +50,15 @@
               v-model.number="basicInfo.bodyfat"
               label="Bodyfat(optional)"
               @change="calculateData(basicInfo)"
+              @input="calculateData(basicInfo)"
               suffix="%"
             ></v-text-field>
           </v-card>
         </v-col>
         <v-col cols="6" md="8">
-          <v-card class="pa-2" outlined tile>
-            <p class="text-left">
-              Basal Metabolic Rate (BMR) {{ calcsInfo.bmr }} kcal
-            </p>
+          <v-card class="pa-2 text-left" outlined tile>
+            <p v-if="isNaN(calcsInfo.bmr)">Basal Metabolic Rate (BMR)</p>
+            <p v-else>Basal Metabolic Rate (BMR) {{ calcsInfo.bmr }} kcal</p>
             <v-radio-group
               @change="calculateData(basicInfo)"
               v-model="basicInfo.formula"
@@ -72,22 +75,33 @@
               ></v-radio>
             </v-radio-group>
           </v-card>
-          <v-card class="pa-2" outlined tile>
-            <p class="text-left">
+          <v-card class="pa-2 text-left" outlined tile>
+            <p v-if="isNaN(calcsInfo.tdee)">
               Total Daily Energy Expenditure (TDEE)
-              {{ calcsInfo.tdee }} kcal
+            </p>
+            <p v-else>
+              Total Daily Energy Expenditure (TDEE) {{ calcsInfo.tdee }} kcal
             </p>
           </v-card>
-          <v-card class="pa-2" outlined tile>
-            <p class="text-left">Body Mass Index (BMI) {{ calcsInfo.bmi }}</p>
-            <p class="text-left">{{ calcsInfo.bmiText }}</p>
-          </v-card>
-          <v-card class="pa-2" outlined tile>
-            <p class="text-left">Lean Body Mass (LBM) {{ calcsInfo.lbm }} kg</p>
-            <p class="text-left">Fat Body Mass {{ calcsInfo.lbmFat }} kg</p>
-            <p class="text-left">
-              Perfect weight: {{ calcsInfo.perfWeight }} kg
+          <v-card class="pa-2 text-left" outlined tile>
+            <p c v-if="isNaN(calcsInfo.bmi)">
+              Body Mass Index (BMI)
             </p>
+            <p v-else>Body Mass Index (BMI) {{ calcsInfo.bmi }}</p>
+            <p v-if="isNaN(calcsInfo.bmiText)"></p>
+            <p v-else>{{ calcsInfo.bmiText }}</p>
+          </v-card>
+          <v-card class="pa-2 text-left" outlined tile>
+            <p v-if="isNaN(calcsInfo.lbm)">
+              Lean Body Mass (LBM)
+            </p>
+            <p v-else>Lean Body Mass (LBM) {{ calcsInfo.lbm }} kg</p>
+            <p v-if="isNaN(calcsInfo.lbmFat)">
+              Fat Body Mass
+            </p>
+            <p v-else>Fat Body Mass {{ calcsInfo.lbmFat }} kg</p>
+            <p v-if="isNaN(calcsInfo.perfWeight)">Perfect weight</p>
+            <p v-else>Perfect weight: {{ calcsInfo.perfWeight }} kg</p>
           </v-card>
         </v-col>
       </v-row>
@@ -137,15 +151,10 @@ export default {
       this.$store.dispatch(ActionsTypes.SET_BASICINFO, value);
     },
     calculateData(value) {
-      console.log("component: ", value);
       if (value.gender) {
         value.gendDiff = this.text.formula[value.formula][value.gender];
       }
       this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
-      if (value.bodyfat) {
-        this.$store.dispatch(ActionsTypes.CACLULATE_LBM, value);
-        this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
-      }
     }
   }
 };

@@ -2,7 +2,7 @@
 export interface State {
   utils: Utils;
   basic: BasicInfo;
-  calcs?: Calcs;
+  calcs: Calcs;
   macro: Macro;
   summary: Summary;
   tableItems?: TableItems[];

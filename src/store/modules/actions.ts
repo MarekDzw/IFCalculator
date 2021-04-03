@@ -5,45 +5,46 @@ import {
   calculateBMI,
   calculateTDEE,
   calculatePerfWeight,
+  calculateLBMFat,
+  calculateLBM,
+  toFixedNumber,
 } from "@/store/modules/utils";
 import { ActionTree } from "vuex";
-import { State } from "@/store/types";
+import { BasicInfo, State } from "@/store/types";
 import { ActionsTypes } from "@/store/modules/actions-types";
 import { MutationsTypes } from "@/store/modules/mutations-types";
 
 export interface Actions {
-  [ActionsTypes.CACLULATE_BMR]({ commit }, payload): void;
+  [ActionsTypes.CACLULATE_BMR]({ commit }, payload: BasicInfo): void;
   [ActionsTypes.CACLULATE_MACRO]({ commit }, payload): void;
   [ActionsTypes.SET_NEWDATE]({ commit }, payload): void;
-  [ActionsTypes.SET_BASICINFO]({ commit }, payload): void;
+  [ActionsTypes.SET_BASICINFO]({ commit }, payload: BasicInfo): void;
   [ActionsTypes.CACLULATE_GOAL]({ commit }, payload): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
   [ActionsTypes.CACLULATE_BMR]({ commit }, data) {
-    console.log("actions: ", data);
-    let bmr: number = calculateBMR(this, data);
-    let bmi: number = calculateBMI(data);
+    let lbmFat = toFixedNumber(calculateLBMFat(data.weight, data.bodyfat), 1);
+    let lbm = toFixedNumber(calculateLBM(data.weight, lbmFat), 1);
+    let height = data.height / 100;
+    let bmr = toFixedNumber(calculateBMR(lbm, data), 0);
+    let bmi = calculateBMI(data.weight, data.height);
     let bmiText = checkBMI(bmi);
-    let lbmFat = (data.weight * data.bodyfat) / 100;
-    let lbm = data.weight - lbmFat;
-    let value1 = {
+    let tdee = calculateTDEE(data.activity, bmr);
+    let perfWeight = toFixedNumber(calculatePerfWeight(height), 1);
+    let objLBM = {
       lbm: lbm,
       lbmFat: lbmFat,
     };
-
-    let value2 = {
+    let objBMI = {
       bmi: bmi,
       bmiText: bmiText,
     };
-    let value3: number = calculateTDEE(this, data);
-    let height = this.state.basic.height / 100;
-    let value4 = calculatePerfWeight(height);
+    commit(MutationsTypes.UPDATE_PERFWEIGHT, perfWeight);
+    commit(MutationsTypes.UPDATE_TDEE, tdee);
+    commit(MutationsTypes.UPDATE_LBM, objLBM);
+    commit(MutationsTypes.UPDATE_BMI, objBMI);
     commit(MutationsTypes.UPDATE_BMR, bmr);
-    commit(MutationsTypes.UPDATE_PERFWEIGHT, value4);
-    commit(MutationsTypes.UPDATE_TDEE, value3);
-    commit(MutationsTypes.UPDATE_LBM, value1);
-    commit(MutationsTypes.UPDATE_BMI, value2);
   },
 
   [ActionsTypes.CACLULATE_MACRO]({ commit }, data) {
