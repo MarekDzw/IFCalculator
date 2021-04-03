@@ -6,8 +6,10 @@ import {
   calculateTDEE,
   calculatePerfWeight,
   calculateLBMFat,
-  calculateLBM,
   toFixedNumber,
+  calculateMinus,
+  calculateKcal,
+  calculateMulti,
 } from "@/store/modules/utils";
 import { ActionTree } from "vuex";
 import { BasicInfo, State } from "@/store/types";
@@ -25,7 +27,7 @@ export interface Actions {
 export const actions: ActionTree<State, State> & Actions = {
   [ActionsTypes.CACLULATE_BMR]({ commit }, data) {
     let lbmFat = toFixedNumber(calculateLBMFat(data.weight, data.bodyfat), 1);
-    let lbm = toFixedNumber(calculateLBM(data.weight, lbmFat), 1);
+    let lbm = toFixedNumber(calculateMinus(data.weight, lbmFat), 1);
     let height = data.height / 100;
     let bmr = toFixedNumber(calculateBMR(lbm, data), 0);
     let bmi = calculateBMI(data.weight, data.height);
@@ -48,24 +50,25 @@ export const actions: ActionTree<State, State> & Actions = {
   },
 
   [ActionsTypes.CACLULATE_MACRO]({ commit }, data) {
-    let value = data;
-    let tdee = this.state.calcs.tdee;
-    let workoutKcal = (tdee * (100 + Number(value.workoutPercent))) / 100;
-    let restKcal = (tdee * (100 + Number(value.restPercent))) / 100;
-    let restDays = value.dpc - value.wpc;
-    let cycleTee = tdee * value.dpc;
-    let cycleKcal = restDays * restKcal + value.wpc * workoutKcal;
-    let cycleOU = cycleKcal - cycleTee;
-    let cycleChangeKG = 0.000133 * cycleOU;
-    value.restKcal = restKcal;
-    value.workoutKcal = workoutKcal;
+    let workoutKcal = toFixedNumber(
+      calculateKcal(data.tdee, data.workoutPercent),
+      0
+    );
+    let restKcal = toFixedNumber(calculateKcal(data.tdee, data.restPercent), 0);
+    let restDays = calculateMinus(data.dpc, data.wpc);
+    let cycleTee = calculateMulti(data.tdee, data.dpc);
+    let cycleKcal = restDays * restKcal + data.wpc * workoutKcal;
+    let cycleOU = toFixedNumber(calculateMinus(cycleKcal, cycleTee), 0);
+    let cycleChangeKG = toFixedNumber(calculateMulti(0.000133, cycleOU), 2);
+    data.restKcal = restKcal;
+    data.workoutKcal = workoutKcal;
     let valueSummary = {
       cycleKcal: cycleKcal,
       cycleTee: cycleTee,
       cycleOU: cycleOU,
       cycleChangeKG: cycleChangeKG,
     };
-    commit(MutationsTypes.UPDATE_MACRO, value);
+    commit(MutationsTypes.UPDATE_MACRO, data);
     commit(MutationsTypes.UPDATE_SUMMARY, valueSummary);
   },
   [ActionsTypes.SET_NEWDATE]({ commit }, data) {

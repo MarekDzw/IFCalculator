@@ -21,8 +21,8 @@ const store: StoreOptions<State> = {
     macro: {
       dpc: 7,
       wpc: 2,
-      restPercent: -20,
       workoutPercent: 20,
+      restPercent: -20,
     },
     summary: {
       goal: -5,

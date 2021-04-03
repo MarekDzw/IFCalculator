@@ -25,8 +25,14 @@ export function calculatePerfWeight(height: number): number {
 export function calculateLBMFat(weight: number, bodyfat: number): number {
   return (weight * bodyfat) / 100;
 }
-export function calculateLBM(weight: number, lbmFat: number): number {
-  return weight - lbmFat;
+export function calculateMinus(x: number, y: number): number {
+  return x - y;
+}
+export function calculateKcal(tdee: number, percent: number) {
+  return (tdee * (100 + percent)) / 100;
+}
+export function calculateMulti(x: number, y: number): number {
+  return x * y;
 }
 export function toFixedNumber(
   num: number,

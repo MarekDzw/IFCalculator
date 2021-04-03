@@ -110,9 +110,11 @@
     <v-container class="d-flex justify-center">
       <v-btn
         color="primary"
-        :disabled="!basicInfo"
+        :disabled="isNaN(calcsInfo.bmr)"
         @click="
-          updatePage(3), setBasicInfo(basicInfo), calculateMacro(basicInfo)
+          updatePage(3),
+            setBasicInfo(basicInfo),
+            calculateMacro(macroInfo, calcsInfo.tdee)
         "
         >Next step</v-btn
       >
@@ -138,13 +140,17 @@ export default {
     },
     calcsInfo() {
       return this.$store.state.calcs;
+    },
+    macroInfo() {
+      return this.$store.state.macro;
     }
   },
   methods: {
     updatePage(value) {
       this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
-    calculateMacro(value) {
+    calculateMacro(value, tdee) {
+      value.tdee = tdee;
       this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
     },
     setBasicInfo(value) {

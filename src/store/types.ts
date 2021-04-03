@@ -35,10 +35,10 @@ export interface Calcs {
 export interface Macro {
   dpc: number;
   wpc: number;
-  workoutKcal?: number;
-  restKcal?: number;
   restPercent: number;
   workoutPercent: number;
+  workoutKcal?: number;
+  restKcal?: number;
 }
 export interface Summary {
   cycleTee?: number;
