@@ -25,6 +25,7 @@ const store: StoreOptions<State> = {
       restPercent: -20,
     },
     summary: {
+      cycleChangeKG: 0,
       goal: -5,
     },
   },
