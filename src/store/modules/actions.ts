@@ -21,7 +21,7 @@ export interface Actions {
   [ActionsTypes.CACLULATE_MACRO]({ commit }, payload): void;
   [ActionsTypes.SET_NEWDATE]({ commit }, payload): void;
   [ActionsTypes.SET_BASICINFO]({ commit }, payload: BasicInfo): void;
-  [ActionsTypes.CACLULATE_GOAL]({ commit }, payload): void;
+  [ActionsTypes.SET_GOAL]({ commit }, payload): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -77,8 +77,7 @@ export const actions: ActionTree<State, State> & Actions = {
   [ActionsTypes.SET_BASICINFO]({ commit }, data) {
     commit(MutationsTypes.UPDATE_BASICINFO, data);
   },
-  [ActionsTypes.CACLULATE_GOAL]({ commit }, data) {
-    let value = fillData(data);
-    commit(MutationsTypes.UPDATE_GOAL, value);
+  [ActionsTypes.SET_GOAL]({ commit }, data) {
+    commit(MutationsTypes.UPDATE_GOAL, data);
   },
 };

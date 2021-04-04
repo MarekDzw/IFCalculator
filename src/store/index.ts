@@ -24,6 +24,7 @@ const store: StoreOptions<State> = {
       restPercent: -20,
     },
     summary: {
+      date: new Date().toISOString().substr(0, 10),
       cycleChangeKG: 0,
       goal: -5,
     },

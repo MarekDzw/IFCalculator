@@ -5,7 +5,6 @@ export interface State {
   calcs: Calcs;
   macro: Macro;
   summary: Summary;
-  tableItems?: TableItems[];
 }
 //Models
 export interface Utils {
@@ -45,7 +44,7 @@ export interface Summary {
   cycleOU?: number;
   cycleChangeKG?: number;
   goal: number;
-  date?: string;
+  date: string;
 }
 export interface TableItems {
   date?: number;

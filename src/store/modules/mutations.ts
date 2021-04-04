@@ -1,11 +1,4 @@
-import {
-  BasicInfo,
-  Calcs,
-  Macro,
-  State,
-  Summary,
-  TableItems,
-} from "@/store/types";
+import { BasicInfo, Calcs, Macro, State, Summary } from "@/store/types";
 import { MutationTree } from "vuex";
 import { MutationsTypes } from "@/store/modules/mutations-types";
 
@@ -20,7 +13,7 @@ export type Mutations = {
   [MutationsTypes.UPDATE_PERFWEIGHT](state: State, payload: number): void;
   [MutationsTypes.UPDATE_DATE](state: State, payload: string): void;
   [MutationsTypes.UPDATE_BASICINFO](state: State, payload: BasicInfo): void;
-  [MutationsTypes.UPDATE_GOAL](state: State, payload: TableItems): void;
+  [MutationsTypes.UPDATE_GOAL](state: State, payload: number): void;
 };
 export const mutations: MutationTree<State> & Mutations = {
   [MutationsTypes.UPDATE_DISCLAIMER](state, payload) {
@@ -71,6 +64,6 @@ export const mutations: MutationTree<State> & Mutations = {
     state.summary.date = payload;
   },
   [MutationsTypes.UPDATE_GOAL](state, payload) {
-    state.tableItems = payload;
+    state.summary.goal = payload;
   },
 };

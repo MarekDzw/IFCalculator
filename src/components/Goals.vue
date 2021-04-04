@@ -7,7 +7,6 @@
             ref="menu"
             v-model="menu"
             :close-on-content-click="false"
-            :return-value.sync="summaryInfo.date"
             transition="scale-transition"
             offset-y
             min-width="auto"
@@ -42,9 +41,9 @@
           <v-text-field
             :step="0.5"
             type="number"
-            v-model="summaryInfo.goal"
+            v-model.number="summaryInfo.goal"
             label="Set goal in kg"
-            @change="calculateGoal(summaryInfo)"
+            @change="setGoal(summaryInfo.goal)"
             suffix="kg"
           ></v-text-field>
         </v-col>
@@ -88,11 +87,10 @@ export default {
       this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
     setNewDate(value) {
-      console.log(value);
       this.$store.dispatch(ActionsTypes.SET_NEWDATE, value);
     },
-    calculateGoal(value) {
-      this.$store.dispatch(ActionsTypes.CACLULATE_GOAL, value);
+    setGoal(value) {
+      this.$store.dispatch(ActionsTypes.SET_GOAL, value);
     }
   }
 };
