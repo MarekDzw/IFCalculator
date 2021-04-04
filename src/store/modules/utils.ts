@@ -1,5 +1,5 @@
 import text from "@/data/text.json";
-import { BasicInfo } from "@/store/types";
+import { BasicInfo, TableItems } from "@/store/types";
 
 export function calculateBMI(weight: number, height: number): number {
   return Math.floor(weight / ((height / 100) * (height / 100)));
@@ -70,40 +70,37 @@ export function calculateBMR(lbm: number, data: BasicInfo): number {
   }
   return value;
 }
-export function addDays(date: Date, days: number): Date {
-  const copy = new Date(Number(date));
-  copy.setDate(date.getDate() + days);
-  return copy;
+export function addDays(date: string, days: number): string {
+  const copy = new Date(date);
+  copy.setDate(copy.getDate() + days);
+  return copy.toISOString().substr(0, 10);
 }
 export function fillData(value: any) {
   let i = 0;
-  let items = [];
-  let goal = Number(value.goal);
-  let change = Number(value.summary.cycleChangeKG);
-  let x = goal / change;
-  console.log(value);
+  let items: TableItems[] = [];
+  let { goal, cycleChangeKG, date } = value.summary;
+  let { weight } = value.basic;
+  let change;
+  let x = goal / cycleChangeKG;
   let item = {
-    date: new Date().toISOString().substr(0, 10),
-    cycle: i,
-    days: i,
-    weight: Number(value.weight),
-    change: Number(value.summary.cycleChangeKG),
-    total:
-      Number(value.summary.cycleChangeKG) + Number(value.summary.cycleChangeKG),
+    date: date,
+    cycle: 0,
+    days: 0,
+    weight: weight,
+    change: 0,
+    total: 0,
   };
   i++;
   items.push(item);
-  console.log(items);
   while (x > 0) {
     item = {
-      date: items[i - 1].date + 1,
+      date: addDays(items[i - 1].date, value.macro.dpc),
       cycle: i,
-      days: items[i - 1].days + Number(value.macro.dpc),
-      weight: items[i - 1].weight + Number(value.summary.cycleChangeKG),
-      change: value.summary.cycleChangeKG,
-      total: items[i - 1].total + Number(value.summary.cycleChangeKG),
+      days: items[i - 1].days + value.macro.dpc,
+      weight: toFixedNumber(items[i - 1].weight + cycleChangeKG, 2),
+      change: cycleChangeKG,
+      total: toFixedNumber(items[i - 1].total + cycleChangeKG, 2),
     };
-
     goal += change;
     i++;
     x--;

@@ -50,7 +50,7 @@
       </v-row>
       <v-data-table
         :headers="text.headers"
-        :items="dataInfo.tableItems"
+        :items="tableItems"
         :items-per-page="10"
         class="elevation-1"
       ></v-data-table>
@@ -75,11 +75,11 @@ export default {
     };
   },
   computed: {
-    dataInfo() {
-      return this.$store.state;
-    },
     summaryInfo() {
       return this.$store.state.summary;
+    },
+    tableItems() {
+      return this.$store.getters.tableItems;
     }
   },
   methods: {
