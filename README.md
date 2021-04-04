@@ -4,9 +4,4 @@
 
 Rewritten old Intermittent Fasting Calculator to run on modern web browsers.
 
-### TODO
 
-- [ ] Goals
-  - [ ] Add goal set
-    - [ ] Set total weight loss in kg
-    - [ ] Display grid

@@ -1,7 +1,6 @@
 import text from "@/data/text.json";
 import { BasicInfo } from "@/store/types";
 
-
 export function calculateBMI(weight: number, height: number): number {
   return Math.floor(weight / ((height / 100) * (height / 100)));
 }
