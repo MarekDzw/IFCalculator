@@ -124,11 +124,12 @@
 
 <script lang="ts">
 import text from "../data/text.json";
+import Vue from "vue/types/umd";
 import { MutationsTypes } from "@/store/modules/mutations-types";
 import { ActionsTypes } from "@/store/modules/actions-types";
 import { BasicInfo, Calcs, Macro } from "@/store/types";
 
-export default {
+export default Vue.extend({
   name: "BasicInfo",
   data() {
     return {
@@ -164,5 +165,5 @@ export default {
       this.$store.dispatch(ActionsTypes.CACLULATE_BMR, value);
     }
   }
-};
+});
 </script>

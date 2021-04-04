@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
-
 import { State } from "@/store/types";
 import { mutations } from "@/store/modules/mutations";
 import { actions } from "@/store/modules/actions";
