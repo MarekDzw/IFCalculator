@@ -64,15 +64,15 @@ export const actions: ActionTree<State, State> & Actions = {
 
          [ActionsTypes.CACLULATE_MACRO]({ commit }, data) {
            let workoutKcal = toFixedNumber(
-             calculateKcal(data.tdee, data.workoutPercent),
+             calculateKcal(data.tdee ? data.tdee : 0, data.workoutPercent),
              0
            );
            let restKcal = toFixedNumber(
-             calculateKcal(data.tdee, data.restPercent),
+             calculateKcal(data.tdee ? data.tdee : 0, data.restPercent),
              0
            );
            let restDays = calculateMinus(data.dpc, data.wpc);
-           let cycleTee = calculateMulti(data.tdee, data.dpc);
+           let cycleTee = calculateMulti(data.tdee ? data.tdee : 0, data.dpc);
            let cycleKcal = restDays * restKcal + data.wpc * workoutKcal;
            let cycleOU = toFixedNumber(calculateMinus(cycleKcal, cycleTee), 0);
            let cycleChangeKG = toFixedNumber(
