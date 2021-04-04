@@ -12,7 +12,6 @@ const store: StoreOptions<State> = {
     utils: {
       page: 1,
       disclaimerCheck: false,
-      date: new Date(),
     },
     basic: {
       formula: "mifflin",

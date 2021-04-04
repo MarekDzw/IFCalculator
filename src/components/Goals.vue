@@ -7,14 +7,14 @@
             ref="menu"
             v-model="menu"
             :close-on-content-click="false"
-            :return-value.sync="goalInfo"
+            :return-value.sync="summaryInfo.date"
             transition="scale-transition"
             offset-y
             min-width="auto"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="goalInfo"
+                v-model="summaryInfo.date"
                 label="Pick a start date"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -22,14 +22,14 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="goalInfo" no-title scrollable>
+            <v-date-picker v-model="summaryInfo.date" no-title scrollable>
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
               <v-btn
                 text
                 color="primary"
                 @click="
-                  setNewDate(goalInfo);
+                  setNewDate(summaryInfo.date);
                   menu = false;
                 "
               >
@@ -42,9 +42,9 @@
           <v-text-field
             :step="0.5"
             type="number"
-            v-model="goalInfo"
+            v-model="summaryInfo.goal"
             label="Set goal in kg"
-            @change="calculateGoal(goalInfo)"
+            @change="calculateGoal(summaryInfo)"
             suffix="kg"
           ></v-text-field>
         </v-col>
@@ -79,8 +79,8 @@ export default {
     dataInfo() {
       return this.$store.state;
     },
-    goalInfo() {
-      return this.$store.state.data;
+    summaryInfo() {
+      return this.$store.state.summary;
     }
   },
   methods: {
@@ -88,6 +88,7 @@ export default {
       this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
     setNewDate(value) {
+      console.log(value);
       this.$store.dispatch(ActionsTypes.SET_NEWDATE, value);
     },
     calculateGoal(value) {

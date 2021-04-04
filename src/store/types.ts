@@ -11,7 +11,6 @@ export interface State {
 export interface Utils {
   page: number;
   disclaimerCheck: boolean;
-  date: Date;
 }
 export interface BasicInfo {
   height?: number;
@@ -46,6 +45,7 @@ export interface Summary {
   cycleOU?: number;
   cycleChangeKG?: number;
   goal: number;
+  date?: string;
 }
 export interface TableItems {
   date?: number;

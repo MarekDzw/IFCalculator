@@ -70,6 +70,11 @@ export function calculateBMR(lbm: number, data: BasicInfo): number {
   }
   return value;
 }
+export function addDays(date: Date, days: number): Date {
+  const copy = new Date(Number(date));
+  copy.setDate(date.getDate() + days);
+  return copy;
+}
 export function fillData(value: any) {
   let i = 0;
   let items = [];

@@ -18,7 +18,7 @@ export type Mutations = {
   [MutationsTypes.UPDATE_MACRO](state: State, payload: Macro): void;
   [MutationsTypes.UPDATE_SUMMARY](state: State, payload: Summary): void;
   [MutationsTypes.UPDATE_PERFWEIGHT](state: State, payload: number): void;
-  [MutationsTypes.UPDATE_DATE](state: State, payload: Date): void;
+  [MutationsTypes.UPDATE_DATE](state: State, payload: string): void;
   [MutationsTypes.UPDATE_BASICINFO](state: State, payload: BasicInfo): void;
   [MutationsTypes.UPDATE_GOAL](state: State, payload: TableItems): void;
 };
@@ -68,7 +68,7 @@ export const mutations: MutationTree<State> & Mutations = {
     state.basic.bodyfat = bodyfat;
   },
   [MutationsTypes.UPDATE_DATE](state, payload) {
-    state.tableItems[0].date = payload;
+    state.summary.date = payload;
   },
   [MutationsTypes.UPDATE_GOAL](state, payload) {
     state.tableItems = payload;
