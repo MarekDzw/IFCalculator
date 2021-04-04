@@ -1,15 +1,15 @@
 <template>
   <Skeleton>
-    <template v-slot:disclaimer>
+    <template v-slot:Disclaimer>
       <Disclaimer />
     </template>
-    <template v-slot:basicinfo>
+    <template v-slot:BasicInfo>
       <BasicInfo />
     </template>
-    <template v-slot:macrocalc>
+    <template v-slot:MacroCalc>
       <MacroCalc />
     </template>
-    <template v-slot:goals>
+    <template v-slot:Goals>
       <Goals />
     </template>
   </Skeleton>

@@ -19,8 +19,10 @@ export interface BasicInfo {
   gender?: string;
   bodyfat?: number;
   gendDiff?: number;
+
   formula: string;
 }
+
 export interface Calcs {
   bmr?: number;
   tdee?: number;
@@ -30,6 +32,7 @@ export interface Calcs {
   perfWeight?: number;
   bmiText?: string;
 }
+
 export interface Macro {
   dpc: number;
   wpc: number;
