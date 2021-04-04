@@ -76,24 +76,23 @@
 
 <script lang="ts">
 import { MutationsTypes } from "@/store/modules/mutations-types";
+import Vue from "vue";
+import Component from "vue-class-component";
 
-export default {
-  name: "Disclaimer",
-  methods: {
-    updatePage(value: number) {
-      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
-    },
-    updateCheckbox(value: boolean) {
-      console.log(value);
-      this.$store.commit(MutationsTypes.UPDATE_DISCLAIMER, value);
-    }
-  },
-  computed: {
-    checkboxInfo(): boolean {
-      return this.$store.state.utils.disclaimerCheck;
-    }
+@Component({})
+export default class Disclaimer extends Vue {
+  get checkboxInfo(): boolean {
+    return this.$store.state.utils.disclaimerCheck;
   }
-};
+
+  updatePage(value: number) {
+    this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
+  }
+
+  updateCheckbox(value: boolean) {
+    this.$store.commit(MutationsTypes.UPDATE_DISCLAIMER, value);
+  }
+}
 </script>
 
 <style lang="scss">
