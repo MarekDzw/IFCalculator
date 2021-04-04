@@ -123,15 +123,15 @@
 </template>
 
 <script lang="ts">
-import text from "../data/text.json";
-import { MutationsTypes } from "@/store/modules/mutations-types";
-import { ActionsTypes } from "@/store/modules/actions-types";
-import Vue from "vue";
-import Component from "vue-class-component";
+import text from '../data/text.json';
+import { MutationsTypes } from '@/store/modules/mutations-types';
+import { ActionsTypes } from '@/store/modules/actions-types';
+import Vue from 'vue';
+import Component from 'vue-class-component';
 
 @Component({})
 export default class BasicInfo extends Vue {
-  //Add type for text, object not passing
+  //Add typeas for text, object not passing
   text: any = text;
 
   get basicInfo() {
@@ -151,8 +151,13 @@ export default class BasicInfo extends Vue {
   }
 
   calculateMacro(value: any, tdee: number) {
+    this.$gtag.event('calculate-macro', {
+      event_category: 'calculated-macro-on-basic-page',
+      event_label: 'Calculated macro on basic page',
+      value: 1,
+    });
     value.tdee = tdee;
-    this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, "asd");
+    this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
   }
 
   setBasicInfo(value: any) {

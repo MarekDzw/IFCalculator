@@ -90,6 +90,11 @@ export default class Disclaimer extends Vue {
   }
 
   updateCheckbox(value: boolean) {
+    this.$gtag.event("disclaimer-check", {
+      event_category: "first-page-disclaimer",
+      event_label: "Disclaimer Checkbox Click on First Page",
+      value: 1
+    });
     this.$store.commit(MutationsTypes.UPDATE_DISCLAIMER, value);
   }
 }
