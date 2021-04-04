@@ -152,7 +152,7 @@ export default class BasicInfo extends Vue {
 
   calculateMacro(value: any, tdee: number) {
     value.tdee = tdee;
-    this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, "asd");
+    this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
   }
 
   setBasicInfo(value: any) {
