@@ -1,5 +1,4 @@
 import {
-  fillData,
   checkBMI,
   calculateBMR,
   calculateBMI,
@@ -11,17 +10,28 @@ import {
   calculateKcal,
   calculateMulti,
 } from "@/store/modules/utils";
-import { ActionTree } from "vuex";
-import { BasicInfo, State } from "@/store/types";
+import { ActionContext, ActionTree } from "vuex";
+import { BasicInfo, Calcs, Macro, State } from "@/store/types";
 import { ActionsTypes } from "@/store/modules/actions-types";
 import { MutationsTypes } from "@/store/modules/mutations-types";
 
 export interface Actions {
-  [ActionsTypes.CACLULATE_BMR]({ commit }, payload: BasicInfo): void;
-  [ActionsTypes.CACLULATE_MACRO]({ commit }, payload): void;
-  [ActionsTypes.SET_NEWDATE]({ commit }, payload): void;
-  [ActionsTypes.SET_BASICINFO]({ commit }, payload: BasicInfo): void;
-  [ActionsTypes.SET_GOAL]({ commit }, payload): void;
+  [ActionsTypes.CACLULATE_MACRO](
+    { commit }: ActionContext<State, State>,
+    payload: Calcs & Macro
+  ): void;
+  [ActionsTypes.SET_NEWDATE](
+    { commit }: ActionContext<State, State>,
+    payload: string
+  ): void;
+  [ActionsTypes.SET_BASICINFO](
+    { commit }: ActionContext<State, State>,
+    payload: BasicInfo
+  ): void;
+  [ActionsTypes.SET_GOAL](
+    { commit }: ActionContext<State, State>,
+    payload: number
+  ): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {

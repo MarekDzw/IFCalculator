@@ -62,10 +62,12 @@
     <v-divider></v-divider>
     <v-container class="d-flex flex-sm-column align-center">
       <v-checkbox
-        v-model="checkbox"
+        v-model="checkboxInfo"
+        @change="updateCheckbox(!checkboxInfo)"
+        :value.sync="checkboxInfo"
         label="I agree to the terms and conditions described in this disclaimer"
       ></v-checkbox>
-      <v-btn :disabled="!checkbox" color="primary" @click="updatePage(2)"
+      <v-btn :disabled="!checkboxInfo" color="primary" @click="updatePage(2)"
         >Next step</v-btn
       >
     </v-container>
@@ -78,18 +80,17 @@ import { MutationsTypes } from "@/store/modules/mutations-types";
 export default {
   name: "Disclaimer",
   methods: {
-    updatePage(value: number): number {
+    updatePage(value: number) {
       this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
+    },
+    updateCheckbox(value: boolean) {
+      console.log(value);
+      this.$store.commit(MutationsTypes.UPDATE_DISCLAIMER, value);
     }
   },
   computed: {
-    checkbox: {
-      get(): boolean {
-        return this.$store.state.utils.disclaimerCheck;
-      },
-      set(value: boolean): boolean {
-        this.$store.commit(MutationsTypes.UPDATE_DISCLAIMER, value);
-      }
+    checkboxInfo(): boolean {
+      return this.$store.state.utils.disclaimerCheck;
     }
   }
 };

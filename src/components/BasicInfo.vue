@@ -122,10 +122,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import text from "../data/text.json";
 import { MutationsTypes } from "@/store/modules/mutations-types";
 import { ActionsTypes } from "@/store/modules/actions-types";
+import { BasicInfo, Calcs, Macro } from "@/store/types";
 
 export default {
   name: "BasicInfo",
@@ -135,21 +136,21 @@ export default {
     };
   },
   computed: {
-    basicInfo() {
+    basicInfo(): BasicInfo {
       return this.$store.state.basic;
     },
-    calcsInfo() {
+    calcsInfo(): Calcs {
       return this.$store.state.calcs;
     },
-    macroInfo() {
+    macroInfo(): Macro {
       return this.$store.state.macro;
     }
   },
   methods: {
-    updatePage(value) {
+    updatePage(value: number) {
       this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
     },
-    calculateMacro(value, tdee) {
+    calculateMacro(value, tdee: number) {
       value.tdee = tdee;
       this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
     },

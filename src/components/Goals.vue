@@ -62,7 +62,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ActionsTypes } from "@/store/modules/actions-types";
 import { MutationsTypes } from "@/store/modules/mutations-types";
 import text from "../data/text.json";
