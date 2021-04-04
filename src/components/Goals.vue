@@ -66,33 +66,33 @@
 import { ActionsTypes } from "@/store/modules/actions-types";
 import { MutationsTypes } from "@/store/modules/mutations-types";
 import text from "../data/text.json";
-export default {
-  name: "Goals",
-  data() {
-    return {
-      text,
-      menu: false
-    };
-  },
-  computed: {
-    summaryInfo() {
-      return this.$store.state.summary;
-    },
-    tableItems() {
-      return this.$store.getters.tableItems;
-    }
-  },
-  methods: {
-    updatePage(value) {
-      this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
-    },
-    setNewDate(value) {
-      this.$store.dispatch(ActionsTypes.SET_NEWDATE, value);
-    },
-    setGoal(value) {
-      this.$store.dispatch(ActionsTypes.SET_GOAL, value);
-    }
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component({})
+export default class Goals extends Vue {
+  text: object = text;
+  menu: boolean = false;
+
+  get summaryInfo() {
+    return this.$store.state.summary;
   }
-};
+
+  get tableItems() {
+    return this.$store.getters.tableItems;
+  }
+
+  updatePage(value: number) {
+    this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
+  }
+
+  setNewDate(value: string) {
+    this.$store.dispatch(ActionsTypes.SET_NEWDATE, value);
+  }
+
+  setGoal(value: number) {
+    this.$store.dispatch(ActionsTypes.SET_GOAL, value);
+  }
+}
 </script>
 <style lang=""></style>
