@@ -2,7 +2,7 @@
   <div>
     <v-container class="scroll">
       <v-card-title>IF Calculator Terms and Conditions of Use</v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         PLEASE READ THESE TERMS AND CONDITIONS OF USE CAREFULLY BEFORE USING
         THIS PROGRAM. By using the Program, you signify your assent to these
         Terms and Conditions. If you do not agree to all of these Terms and
@@ -12,7 +12,7 @@
         those changes.
       </v-card-text>
       <v-card-title>THE PROGRAM DOES NOT PROVIDE MEDICAL ADVICE.</v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         The full contents of the Program, such as text, comments, graphics,
         images, and other material contained in the Program are for
         informational purposes only. This Program has not been evaluated by the
@@ -30,7 +30,7 @@
       <v-card-title>
         RELEASE OF LIABILITY OF PROGRAM AND PROGRAM CREATORS/OWNERS
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         The use of the Program is at your own risk. In no event shall the
         Program, its owners, creators and/or programmers, or any third parties
         mentioned in the Program be liable for any damages in the future
@@ -50,7 +50,7 @@
         nutritional daily diet or beginning an exercise program.
       </v-card-text>
       <v-card-title>COMPLETE AGREEMENT.</v-card-title>
-      <v-card-text>
+      <v-card-text class="text-left">
         These Terms and Conditions constitute the agreement between you and this
         Program with respect to the use of the Program. User, for themself,
         their heirs and assigns, hereby release the Program and its Owner(s)/
@@ -62,35 +62,37 @@
     <v-divider></v-divider>
     <v-container class="d-flex flex-sm-column align-center">
       <v-checkbox
-        v-model="checkbox"
+        v-model="checkboxInfo"
+        @change="updateCheckbox(!checkboxInfo)"
+        :value.sync="checkboxInfo"
         label="I agree to the terms and conditions described in this disclaimer"
       ></v-checkbox>
-      <v-btn :disabled="!checkbox" color="primary" @click="updatePage(2)"
+      <v-btn :disabled="!checkboxInfo" color="primary" @click="updatePage(2)"
         >Next step</v-btn
       >
     </v-container>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Disclaimer',
-  methods: {
-    updatePage(value) {
-      this.$store.commit('updatePage', value);
-    },
-  },
-  computed: {
-    checkbox: {
-      get() {
-        return this.$store.state.disclaimerCheck;
-      },
-      set(value) {
-        this.$store.commit('updateDisclaimerCheckbox', value);
-      },
-    },
-  },
-};
+<script lang="ts">
+import { MutationsTypes } from "@/store/modules/mutations-types";
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component({})
+export default class Disclaimer extends Vue {
+  get checkboxInfo(): boolean {
+    return this.$store.state.utils.disclaimerCheck;
+  }
+
+  updatePage(value: number) {
+    this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
+  }
+
+  updateCheckbox(value: boolean) {
+    this.$store.commit(MutationsTypes.UPDATE_DISCLAIMER, value);
+  }
+}
 </script>
 
 <style lang="scss">

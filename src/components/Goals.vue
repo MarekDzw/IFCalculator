@@ -7,14 +7,13 @@
             ref="menu"
             v-model="menu"
             :close-on-content-click="false"
-            :return-value.sync="goalInfo.date"
             transition="scale-transition"
             offset-y
             min-width="auto"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="goalInfo.date"
+                v-model="summaryInfo.date"
                 label="Pick a start date"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -22,14 +21,14 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="goalInfo.date" no-title scrollable>
+            <v-date-picker v-model="summaryInfo.date" no-title scrollable>
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
               <v-btn
                 text
                 color="primary"
                 @click="
-                  setNewDate(goalInfo.date);
+                  setNewDate(summaryInfo.date);
                   menu = false;
                 "
               >
@@ -42,16 +41,16 @@
           <v-text-field
             :step="0.5"
             type="number"
-            v-model="goalInfo.goal"
+            v-model.number="summaryInfo.goal"
             label="Set goal in kg"
-            @change="calculateGoal(goalInfo)"
+            @change="setGoal(summaryInfo.goal)"
             suffix="kg"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-data-table
         :headers="text.headers"
-        :items="dataInfo"
+        :items="tableItems"
         :items-per-page="10"
         class="elevation-1"
       ></v-data-table>
@@ -63,35 +62,37 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ActionsTypes } from "@/store/modules/actions-types";
+import { MutationsTypes } from "@/store/modules/mutations-types";
 import text from "../data/text.json";
-export default {
-  name: "Goals",
-  data() {
-    return {
-      text,
-      menu: false,
-    };
-  },
-  computed: {
-    dataInfo() {
-      return this.$store.state.data.tableItems;
-    },
-    goalInfo() {
-      return this.$store.state.data;
-    },
-  },
-  methods: {
-    updatePage(value) {
-      this.$store.commit("updatePage", value);
-    },
-    setNewDate(value) {
-      this.$store.dispatch("setNewDate", value);
-    },
-    calculateGoal(value){
-      this.$store.dispatch("calculateGoal", value);
-    }
-  },
-};
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component({})
+export default class Goals extends Vue {
+  text: object = text;
+  menu: boolean = false;
+
+  get summaryInfo() {
+    return this.$store.state.summary;
+  }
+
+  get tableItems() {
+    return this.$store.getters.tableItems;
+  }
+
+  updatePage(value: number) {
+    this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
+  }
+
+  setNewDate(value: string) {
+    this.$store.dispatch(ActionsTypes.SET_NEWDATE, value);
+  }
+
+  setGoal(value: number) {
+    this.$store.dispatch(ActionsTypes.SET_GOAL, value);
+  }
+}
 </script>
 <style lang=""></style>
