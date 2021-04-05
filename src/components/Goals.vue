@@ -21,6 +21,7 @@
                 v-on="on"
               ></v-text-field>
             </template>
+
             <v-date-picker v-model="summaryInfo.date" no-title scrollable>
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
@@ -48,7 +49,9 @@
           ></v-text-field>
         </v-col>
       </v-row>
+      <v-btn @click="createPDF" color="primary">Download as PDF</v-btn>
       <v-data-table
+        ref="goalTable"
         :headers="text.headers"
         :items="tableItems"
         :items-per-page="10"
@@ -68,6 +71,8 @@ import { MutationsTypes } from "@/store/modules/mutations-types";
 import text from "../data/text.json";
 import Vue from "vue";
 import Component from "vue-class-component";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 @Component({})
 export default class Goals extends Vue {
@@ -92,6 +97,26 @@ export default class Goals extends Vue {
 
   setGoal(value: number) {
     this.$store.dispatch(ActionsTypes.SET_GOAL, value);
+  }
+  createPDF() {
+    let doc = new jsPDF();
+    let source = this.$refs["goalTable"];
+    let rows = [];
+    let columnHeader = ["Date", "Cycle", "Days", "Weight", "Change", "Total"];
+    source.items.forEach(element => {
+      let temp = [
+        element.date,
+        element.cycle,
+        element.days,
+        element.weight,
+        element.change,
+        element.total
+      ];
+      rows.push(temp);
+    });
+
+    doc.autoTable(columnHeader, rows);
+    doc.save("IFCalculator.pdf");
   }
 }
 </script>
