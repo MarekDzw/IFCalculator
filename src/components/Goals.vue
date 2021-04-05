@@ -71,6 +71,7 @@ import { MutationsTypes } from "@/store/modules/mutations-types";
 import text from "../data/text.json";
 import Vue from "vue";
 import Component from "vue-class-component";
+
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -100,10 +101,10 @@ export default class Goals extends Vue {
   }
   createPDF() {
     let doc = new jsPDF();
-    let source = this.$refs["goalTable"];
-    let rows = [];
+    let source: any = this.$refs["goalTable"];
+    let rows: any = [];
     let columnHeader = ["Date", "Cycle", "Days", "Weight", "Change", "Total"];
-    source.items.forEach(element => {
+    source.items.forEach(function(element: any) {
       let temp = [
         element.date,
         element.cycle,
@@ -114,7 +115,7 @@ export default class Goals extends Vue {
       ];
       rows.push(temp);
     });
-
+    // @ts-ignore
     doc.autoTable(columnHeader, rows);
     doc.save("IFCalculator.pdf");
   }
