@@ -49,7 +49,11 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-btn @click="createPDF" color="primary">Download as PDF</v-btn>
+      <v-btn
+        @click="createPDF(calcsInfo, macroInfo, summaryInfo)"
+        color="primary"
+        >Download as PDF</v-btn
+      >
       <v-data-table
         ref="goalTable"
         :headers="text.headers"
@@ -87,7 +91,12 @@ export default class Goals extends Vue {
   get tableItems() {
     return this.$store.getters.tableItems;
   }
-
+  get calcsInfo() {
+    return this.$store.state.calcs;
+  }
+  get macroInfo() {
+    return this.$store.state.macro;
+  }
   updatePage(value: number) {
     this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
   }
@@ -99,16 +108,39 @@ export default class Goals extends Vue {
   setGoal(value: number) {
     this.$store.dispatch(ActionsTypes.SET_GOAL, value);
   }
-  createPDF() {
+  createPDF(calcs: any, macro: any, summary: any) {
     this.$gtag.event("pdf-download-click", {
       event_category: "program results",
       event_label: "PDF Download Button Clicked",
       value: 1
     });
+
     let doc = new jsPDF();
     let source: any = this.$refs["goalTable"];
     let rows: any = [];
     let columnHeader = ["Date", "Cycle", "Days", "Weight", "Change", "Total"];
+
+    let header = function() {
+      doc.setFontSize(16);
+      doc.setTextColor(40);
+      doc.text(`Data:`, 10, 20);
+      doc.text(`Start weight: ${source.items[0].weight} kg`, 10, 30);
+      doc.text(`Start date: ${source.items[0].date} `, 10, 40);
+      doc.text(`Weight change: ${source.items[1].change} kg`, 10, 50);
+      doc.text(`Start BMI: ${calcs.bmi}`, 10, 60);
+      doc.text(`Start BMR: ${calcs.bmr} kcal`, 80, 30);
+      doc.text(`Start TDEE: ${calcs.tdee} kcal`, 80, 40);
+      doc.text(`Rest day kcal: ${macro.restKcal} kcal`, 80, 50);
+      if (macro.wpc > 0) {
+        doc.text(`Workout day kcal: ${macro.workoutKcal} kcal`, 80, 60);
+      }
+      doc.text(
+        `Goal weight: ${source.items[0].weight + summary.goal} kg`,
+        10,
+        70
+      );
+    };
+
     source.items.forEach(function(element: any) {
       let temp = [
         element.date,
@@ -121,7 +153,13 @@ export default class Goals extends Vue {
       rows.push(temp);
     });
     // @ts-ignore
-    doc.autoTable(columnHeader, rows);
+    doc.autoTable({
+      margin: { top: 75 },
+      theme: "grid",
+      head: [columnHeader],
+      body: rows,
+      didDrawPage: header
+    });
     doc.save("IFCalculator.pdf");
   }
 }
