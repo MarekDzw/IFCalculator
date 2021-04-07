@@ -151,6 +151,11 @@ export default class BasicInfo extends Vue {
   }
 
   calculateMacro(value: any, tdee: number) {
+    this.$gtag.event("calculate-macro", {
+      event_category: "calculated-macro-on-basic-page",
+      event_label: "Calculated macro on basic page",
+      value: 1
+    });
     value.tdee = tdee;
     this.$store.dispatch(ActionsTypes.CACLULATE_MACRO, value);
   }

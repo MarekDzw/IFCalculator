@@ -100,6 +100,11 @@ export default class Goals extends Vue {
     this.$store.dispatch(ActionsTypes.SET_GOAL, value);
   }
   createPDF() {
+    this.$gtag.event("pdf-download-click", {
+      event_category: "program results",
+      event_label: "PDF Download Button Clicked",
+      value: 1
+    });
     let doc = new jsPDF();
     let source: any = this.$refs["goalTable"];
     let rows: any = [];

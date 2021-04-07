@@ -123,7 +123,6 @@ import { MutationsTypes } from "@/store/modules/mutations-types";
 import Vue from "vue";
 import Component from "vue-class-component";
 
-
 @Component({})
 export default class MacroCalc extends Vue {
   textTDEE: string = "% Under/Over TDEE";
@@ -137,6 +136,11 @@ export default class MacroCalc extends Vue {
   }
 
   updatePage(value: number) {
+    this.$gtag.event("updated-macro", {
+      event_category: "updated-macro-page",
+      event_label: "Updated macro page",
+      value: 1
+    });
     this.$store.commit(MutationsTypes.UPDATE_PAGE, value);
   }
 
