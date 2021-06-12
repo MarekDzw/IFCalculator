@@ -131,7 +131,7 @@ import Component from 'vue-class-component';
 
 @Component({})
 export default class BasicInfo extends Vue {
-  //Add types for text, object not passing
+  //Add typeas for text, object not passing
   text: any = text;
 
   get basicInfo() {
